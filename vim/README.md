@@ -43,7 +43,7 @@ $ make
 
 # Helpful Links
 Below are sources that I used in creating this vim configuration.  
-1. Installing Powerline: (http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)  
-2. Powerline Documentation: (https://powerline.readthedocs.org/en/latest/installation/linux.html)  
-3. Powerline Fonts: (https://github.com/powerline/fonts)  
-4. Vundle Repo: (https://github.com/VundleVim/Vundle.vim)  
+    1. Installing Powerline: (http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)  
+    2. Powerline Documentation: (https://powerline.readthedocs.org/en/latest/installation/linux.html)  
+    3. Powerline Fonts: (https://github.com/powerline/fonts)  
+    4. Vundle Repo: (https://github.com/VundleVim/Vundle.vim)  
