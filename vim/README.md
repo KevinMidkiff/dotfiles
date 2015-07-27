@@ -21,6 +21,20 @@ $ cd fonts
 $ ./install.sh
 ```
 
+### (MAC OSX) Special Step for Mac
+In order to install the powerline fonts on a Mac using Iterm2 you must install a special version of MacVim.  Run the command below:  
+
+```sh
+$ brew install macvim --env-std --override-system-vim
+```  
+
+To apply the changes to Iterm2 go to: ***Preferences->Profiles->Text***, change the following two settings.  
+
+***Regular Font:*** Inconsolata for Powerline  
+***Non-ASCII Font:*** Inconsolata for Powerline  
+
+I chose to use a 14pt font.
+
 ## Vundle Installation
 *Link: (https://github.com/VundleVim/Vundle.vim)*  
 Execute the following command to install Vundle:  
@@ -39,6 +53,12 @@ Execute the following commands to setup the Command-T plugin.
 $ cd ~/.vim/bundle/command-t/
 $ ruby extconf.rb
 $ make
+```
+
+## Using in TMUX
+To correctly use this vim configuration in tmux you must set your TERM environmental variable to the following:  
+```sh
+$ export TERM=screen-256-color
 ```
 
 # Helpful Links
