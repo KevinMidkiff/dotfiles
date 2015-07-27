@@ -23,8 +23,8 @@ Plugin 'flazz/vim-colorschemes'
 " Status line plugin
 Plugin 'bling/vim-airline'
 
-" Powerline font for Vundle
-" Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
+" Less Syntax Highlighting Plugin
+Plugin 'groenewege/vim-less'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
