@@ -4,6 +4,14 @@ This repository contains my personal vim configuration file.
 # Setting Up
 Before doing any of the following install Pip and Git on your system.  
 
+## Theme
+Run the following commands to install the badwolf theme:  
+```sh
+$ git clone https://github.com/sjl/badwolf.git
+$ mkdir -p ~/.vim/colors/
+$ cp badwolf-master/colors/badwolf ~/.vim/colors/
+```
+
 ## Powerline Fonts Installation
 *Installation: (http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)*  
 *Fonts: (https://github.com/powerline/fonts)*  
@@ -67,3 +75,4 @@ Below are sources that I used in creating this vim configuration.
     2. Powerline Documentation: (https://powerline.readthedocs.org/en/latest/installation/linux.html)  
     3. Powerline Fonts: (https://github.com/powerline/fonts)  
     4. Vundle Repo: (https://github.com/VundleVim/Vundle.vim)  
+    5. Badwolf Vim Theme Repo: (https://github.com/sjl/badwolf)
