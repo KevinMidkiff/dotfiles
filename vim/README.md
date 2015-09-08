@@ -2,12 +2,8 @@
 This repository contains my personal vim configuration file.  
 
 # Setting Up
-Before doing any of the following install Pip and Git on your system.  
+Before doing any of the following install Pip and Git on your system.    
 **Please note that you need Vim with Ruby compiled into it, on Ubuntu this can be done with the following command**  
-
-```sh
-$ sudo apt-get install vim-nox
-```  
 
 ## Theme
 Run the following commands to install the badwolf theme:  
@@ -47,6 +43,14 @@ To apply the changes to Iterm2 go to: ***Preferences->Profiles->Text***, change 
 ***Non-ASCII Font:*** Inconsolata for Powerline  
 
 I chose to use a 14pt font.
+
+## (Ubuntu) Special Setup  
+Install the following packages on Ubuntu:  
+```sh
+$ sudo apt-get install ruby
+$ sudo apt-get install ruby-dev
+$ sudo apt-get install vim-nox
+```  
 
 ## Vundle Installation
 *Link: (https://github.com/VundleVim/Vundle.vim)*  
