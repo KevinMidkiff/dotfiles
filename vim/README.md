@@ -75,7 +75,7 @@ $ make
 ## Using in TMUX
 To correctly use this vim configuration in tmux you must set your TERM environmental variable to the following:  
 ```sh
-$ export TERM=screen-256-color
+$ export TERM=screen-256color
 ```
 
 # Helpful Links
