@@ -26,6 +26,10 @@ Plugin 'bling/vim-airline'
 " Less Syntax Highlighting Plugin
 Plugin 'groenewege/vim-less'
 
+" Enabling Markdown
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 filetype plugin indent on
