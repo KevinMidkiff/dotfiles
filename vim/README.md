@@ -78,6 +78,10 @@ To correctly use this vim configuration in tmux you must set your TERM environme
 $ export TERM=screen-256color
 ```
 
+# Other Themes  
+Below are a list of other themes I like:  
+- (https://github.com/Haron-Prime/Antares)  
+
 # Helpful Links
 Below are sources that I used in creating this vim configuration.  
     1. Installing Powerline: (http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)  

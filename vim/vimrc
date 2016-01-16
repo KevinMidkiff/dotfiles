@@ -44,7 +44,7 @@ let mapleader=","
 filetype indent on
 autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
-colorscheme badwolf
+colorscheme antares
 set cursorline
 set showmatch
 set incsearch
