@@ -80,7 +80,7 @@ $ export TERM=screen-256color
 
 # Other Themes  
 Below are a list of other themes I like:  
-- (https://github.com/Haron-Prime/Antares)  
+- Antares: https://github.com/Haron-Prime/Antares  
 
 # Helpful Links
 Below are sources that I used in creating this vim configuration.  
