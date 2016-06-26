@@ -30,10 +30,13 @@ Plugin 'groenewege/vim-less'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
+" NERDTree for better folder viewing
+Plugin 'scrooloose/nerdTree'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
-filetype plugin indent on
 " ----- END VUNDLE CONFIGURATIONS -----
+
 " ----- Kevin's Configruation --------
 set nu
 syntax on
@@ -44,7 +47,7 @@ let mapleader=","
 filetype indent on
 autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
-colorscheme antares
+colorscheme badwolf
 set cursorline
 set showmatch
 set incsearch
@@ -54,8 +57,6 @@ nnoremap <leader><space> :nohlsearch<CR>
 " vim-airline configuration
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = '>'
-"let g:airline#extensions#tabline#left_alt_sep = '|'
 set laststatus=2
 let g:airline_powerline_fonts=1
 set t_Co=256
