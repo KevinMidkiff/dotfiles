@@ -1,11 +1,29 @@
 # Vim Configuration
 This repository contains my personal vim configuration file.  
 
-# Setting Up
-Before doing any of the following install Pip and Git on your system.    
-**Please note that you need Vim with Ruby compiled into it, on Ubuntu this can be done with the following command**  
+> **IMPORTANT NOTE:**  
+To correctly use this vim configuration you must set your TERM environmental variable to the following: 
+```sh
+$ export TERM=screen-256color
+```
 
-## Theme
+# Installation
+Before doing any of the following install Pip and Git on your system.    
+**Please note that you need Vim with Ruby compiled into it, on Ubuntu this can be done with the following command. This is automatically install in the automated installation**  
+
+## Automated Installation
+The repository includes a bash script (install.sh) to do all of the needed install steps for vim. To use the automated install simply clone or download the repository and run the following command:
+
+```sh
+$ ./install.sh
+```
+
+> **NOTE:** This script should not be ran as sudo (it does it automatically in the script). The script will error out if you run it as sudo. Also, the script does contain error handling for checking that each individual command has run correctly.
+
+## Manual Installation
+The sections below describe all of the needed steps if you wish to install the configuration manually.
+
+### Theme
 Run the following commands to install the badwolf theme:  
 ```sh
 $ git clone https://github.com/sjl/badwolf.git
@@ -13,7 +31,7 @@ $ mkdir -p ~/.vim/colors/
 $ cp badwolf-master/colors/badwolf ~/.vim/colors/
 ```
 
-## Powerline Fonts Installation
+### Powerline Fonts Installation
 *Installation: (http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)*  
 *Fonts: (https://github.com/powerline/fonts)*  
 These instructions are for Ubuntu  
@@ -30,7 +48,7 @@ $ cd fonts
 $ ./install.sh
 ```
 
-### (MAC OSX) Special Step for Mac
+#### (MAC OSX) Special Step for Mac
 In order to install the powerline fonts on a Mac using Iterm2 you must install a special version of MacVim.  Run the command below:  
 
 ```sh
@@ -44,7 +62,7 @@ To apply the changes to Iterm2 go to: ***Preferences->Profiles->Text***, change 
 
 I chose to use a 14pt font.
 
-## (Ubuntu) Special Setup  
+### (Ubuntu) Special Setup  
 Install the following packages on Ubuntu:  
 ```sh
 $ sudo apt-get install ruby
@@ -52,7 +70,7 @@ $ sudo apt-get install ruby-dev
 $ sudo apt-get install vim-nox
 ```  
 
-## Vundle Installation
+### Vundle Installation
 *Link: (https://github.com/VundleVim/Vundle.vim)*  
 Execute the following command to install Vundle:  
 
@@ -61,7 +79,7 @@ $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 $ vim +PluginInstall +qall
 ```
 
-## Command-T Setup
+### Command-T Setup
 *Source: (https://github.com/wincent/Command-T)*  
 *The vim version must have Ruby support built in for Command-T to work. For ubuntu install vim-nox and the support will be added*  
 Execute the following commands to setup the Command-T plugin.  
@@ -70,12 +88,6 @@ Execute the following commands to setup the Command-T plugin.
 $ cd ~/.vim/bundle/command-t/ruby/command-t/
 $ ruby extconf.rb
 $ make
-```
-
-## Using in TMUX
-To correctly use this vim configuration in tmux you must set your TERM environmental variable to the following:  
-```sh
-$ export TERM=screen-256color
 ```
 
 # Other Themes  
