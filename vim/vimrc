@@ -33,6 +33,9 @@ Plugin 'plasticboy/vim-markdown'
 " NERDTree for better folder viewing
 Plugin 'scrooloose/nerdTree'
 
+" rust-lang syntax support
+Plugin 'rust-lang/rust.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " ----- END VUNDLE CONFIGURATIONS -----
