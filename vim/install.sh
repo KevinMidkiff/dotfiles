@@ -132,6 +132,10 @@ checkError "Failed to execute command-t extconf.rb script"
 make
 checkError "Make failed for command-t vim plugin"
 
+cd ~/.vim/bundle/YouCompleteMe/
+./install.sh --clang-completer
+checkError "Failed to install YouCompleteMe vim plugin"
+
 # Add echo to make sure to set TERM=screen-256color
 echo
 echoInfo "DONE! Do not forget to add 'export TERM=screen-256color' to your ~/.bashrc, and you may need to change your terminal font to a powerlines one"

@@ -36,6 +36,9 @@ Plugin 'scrooloose/nerdTree'
 " rust-lang syntax support
 Plugin 'rust-lang/rust.vim'
 
+" You Complete Me
+Plugin 'Valloric/YouCompleteMe'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " ----- END VUNDLE CONFIGURATIONS -----
