@@ -38,6 +38,7 @@ Plugin 'rust-lang/rust.vim'
 
 " You Complete Me
 Plugin 'Valloric/YouCompleteMe'
+Bundle 'rdnetto/YCM-Generator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
