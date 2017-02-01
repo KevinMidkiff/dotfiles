@@ -12,7 +12,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Command-T
-Plugin 'wincent/command-t'
+" Plugin 'wincent/command-t'
 
 " GitRepo plugin Fugitive
 Plugin 'tpope/vim-fugitive'

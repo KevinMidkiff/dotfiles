@@ -40,34 +40,38 @@ function checkError() {
 # Make sure script is running as root
 verifyNotRoot
 
-for package in ${neededPackages[@]}
-do
-    sudo apt-get -y install $package
-    checkError "Failed to install $package"
-done
+# for package in ${neededPackages[@]}
+# do
+#     sudo apt-get -y install $package
+#     checkError "Failed to install $package"
+# done
 
-sudo pip install powerline-status
-checkError "Failed to install pip powerline-status package"
+# sudo pip install powerline-status
+# checkError "Failed to install pip powerline-status package"
+
+if [ ! -d ~/.fonts/conf.d/]; then
+    mkdir -p ~/.fonts/conf.f
+fi
 
 # Add other settings installation
 wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
 checkError "Failed to get PowerlineSymbols.otf"
 
-sudo mv PowerlineSymbols.otf /usr/share/fonts/ 
-checkError "Failed to move PowerlineSymbols.otf to /usr/share/fonts"
+mv PowerlineSymbols.otf ~/.fonts/
+checkError "Failed to move PowerlineSymbols.otf to ~/.fonts"
 
 wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
 checkError "Failed to get 10-powerline-symbols.conf"
 
-sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
+mv 10-powerline-symbols.conf ~/.fonts/conf.d/
 checkError "Failed to move 10-powerline-symbols.otf to /etc/fonts/conf.d/"
 
-sudo fc-cache -vf
-checkError "fc-cache update failed"
+# sudo fc-cache -vf
+# checkError "fc-cache update failed"
 
 # Removing fonts directory if it already exists
 if [ -d ./fonts/ ] ; then
-    sudo rm -r ./fonts/
+    rm -r ./fonts/
     checkError "Failed to remove old ./fonts/ git repository directory"
 fi
 
@@ -123,18 +127,18 @@ popd
 vim +PluginInstall +qall
 checkError "Failed to install Vundle plugins"
 
-cd ~/.vim/bundle/command-t/ruby/command-t/
-checkError "Failed to go to ~/.vim/bundle/command-t/ruby/command-t/"
-
-ruby extconf.rb
-checkError "Failed to execute command-t extconf.rb script"
-
-make
-checkError "Make failed for command-t vim plugin"
-
-cd ~/.vim/bundle/YouCompleteMe/
-./install.sh --clang-completer
-checkError "Failed to install YouCompleteMe vim plugin"
+# cd ~/.vim/bundle/command-t/ruby/command-t/
+# checkError "Failed to go to ~/.vim/bundle/command-t/ruby/command-t/"
+# 
+# ruby extconf.rb
+# checkError "Failed to execute command-t extconf.rb script"
+# 
+# make
+# checkError "Make failed for command-t vim plugin"
+# 
+# cd ~/.vim/bundle/YouCompleteMe/
+# ./install.sh --clang-completer
+# checkError "Failed to install YouCompleteMe vim plugin"
 
 # Add echo to make sure to set TERM=screen-256color
 echo
