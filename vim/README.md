@@ -1,5 +1,5 @@
 # Vim Configuration
-This repository contains my personal vim configuration file.  
+This repository contains my personal vim configuration file and instructions on how to set it up.  
 
 > **IMPORTANT NOTE:**  
 To correctly use this vim configuration you must set your TERM environmental variable to the following: 
