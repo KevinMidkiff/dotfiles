@@ -2,10 +2,14 @@
 This repository contains my personal vim configuration file and instructions on how to set it up.  
 
 > **IMPORTANT NOTE:**  
-To correctly use this vim configuration you must set your TERM environmental variable to the following: 
+To correctly use this vim configuration you must set your TERM must have 256 colors enabled correctly. Add the following to your
+`~/.bashrc` or `~/.zshrc`:
 ```sh
-$ export TERM=screen-256color
+export TERM=xterm-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
 ```
+
+> **Source:** [http://www.economyofeffort.com/2014/07/04/zsh/](http://www.economyofeffort.com/2014/07/04/zsh/)
 
 # Installation
 Before doing any of the following install Pip and Git on your system.    
