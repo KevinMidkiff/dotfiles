@@ -13,6 +13,7 @@ neededPackages=(
     "ruby-dev"
     "git"
     "python-pip"
+    "cmake"
 )
 
 function verifyNotRoot() {
