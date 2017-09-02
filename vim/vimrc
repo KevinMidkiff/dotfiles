@@ -80,4 +80,5 @@ map rr :source ~/.vimrc<CR>
 " turn off search highlight
 nnoremap <leader>, :nohlsearch<CR>
 
+" toggle NERDTree
 nnoremap <leader>ft :NERDTreeToggle<CR>
