@@ -61,8 +61,6 @@ set incsearch
 set hlsearch
 " Leave hidden buffers open
 set hidden
-" turn off search highlight
-nnoremap <leader>, :nohlsearch<CR>
 " vim-airline configuration
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 let g:airline#extensions#tabline#enabled = 1
@@ -74,5 +72,12 @@ set laststatus=2
 let g:airline_powerline_fonts=1
 set t_Co=256
 set colorcolumn=80
-map rr :source ~/.vimrc
-" ----- END Kevin's Configuration ---- 
+
+" --- Key Bindings
+" Reload the vimrc
+map rr :source ~/.vimrc<CR>
+
+" turn off search highlight
+nnoremap <leader>, :nohlsearch<CR>
+
+nnoremap <leader>ft :NERDTreeToggle<CR>
