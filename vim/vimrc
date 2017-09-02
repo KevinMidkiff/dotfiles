@@ -1,12 +1,11 @@
-" ---------- Vundle Configurations -------
+"r---------- Vundle Configurations -------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -22,6 +21,7 @@ Plugin 'flazz/vim-colorschemes'
 
 " Status line plugin
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " Less Syntax Highlighting Plugin
 Plugin 'groenewege/vim-less'
@@ -50,7 +50,7 @@ syntax on
 set expandtab
 set tabstop=4
 set shiftwidth=4
-let mapleader=","
+let mapleader=" "
 filetype indent on
 autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
@@ -59,12 +59,20 @@ set cursorline
 set showmatch
 set incsearch
 set hlsearch
+" Leave hidden buffers open
+set hidden
 " turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>, :nohlsearch<CR>
 " vim-airline configuration
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 let g:airline#extensions#tabline#enabled = 1
+
+" Airline themes
+let g:airline_theme='raven'
+
 set laststatus=2
 let g:airline_powerline_fonts=1
 set t_Co=256
+set colorcolumn=80
+map rr :source ~/.vimrc
 " ----- END Kevin's Configuration ---- 
