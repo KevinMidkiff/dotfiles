@@ -82,3 +82,12 @@ nnoremap <leader>, :nohlsearch<CR>
 
 " toggle NERDTree
 nnoremap <leader>ft :NERDTreeToggle<CR>
+
+" show buffers
+nnoremap <leader>l :ls<CR>
+
+" helper for selecting a buffer
+nnoremap <leader>b :b
+
+" open vimrc
+ nnoremap <leader>fed :e ~/.vimrc<CR>
