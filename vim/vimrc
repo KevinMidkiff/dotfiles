@@ -51,7 +51,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 let mapleader=" "
-filetype indent on
+filetype plugin indent on
 autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 colorscheme badwolf
