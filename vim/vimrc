@@ -54,6 +54,7 @@ let mapleader=" "
 filetype plugin indent on
 autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType markdown setlocal nofoldenable
 colorscheme badwolf
 set cursorline
 set showmatch
