@@ -51,7 +51,7 @@ verifyNotRoot
 # checkError "Failed to install pip powerline-status package"
 
 if [ ! -d ~/.fonts/conf.d/]; then
-    mkdir -p ~/.fonts/conf.f
+    mkdir -p ~/.fonts/conf.d
 fi
 
 # Add other settings installation
