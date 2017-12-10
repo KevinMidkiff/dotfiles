@@ -50,8 +50,10 @@ verifyNotRoot
 # sudo pip install powerline-status
 # checkError "Failed to install pip powerline-status package"
 
-if [ ! -d ~/.fonts/conf.d/]; then
+if [ ! -d ~/.fonts/conf.d/ ]; then
+    echoInfo "Creating ~/.fonts/conf.d"
     mkdir -p ~/.fonts/conf.d
+    checkError "Failed to create directory ~/.fonts/conf.d"
 fi
 
 # Add other settings installation
