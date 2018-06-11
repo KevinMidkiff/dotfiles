@@ -40,6 +40,11 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'Valloric/YouCompleteMe'
 Bundle 'rdnetto/YCM-Generator'
 
+" Adding tender theme
+Plugin 'jacoborus/tender.vim'
+
+Plugin 'dracula/vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " ----- END VUNDLE CONFIGURATIONS -----
@@ -52,10 +57,15 @@ set tabstop=4
 set shiftwidth=4
 let mapleader=" "
 filetype plugin indent on
+
 autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType markdown setlocal nofoldenable
-colorscheme badwolf
+
+" colorscheme badwolf
+" colorscheme tender
+colorscheme dracula
+
 set cursorline
 set showmatch
 set incsearch
@@ -66,8 +76,12 @@ set hidden
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 let g:airline#extensions#tabline#enabled = 1
 
+" auto-close preview window
+let g:ycm_autoclose_preview_window_after_completion = 1
+
 " Airline themes
 let g:airline_theme='raven'
+" let g:airline_theme='tender'
 
 set laststatus=2
 let g:airline_powerline_fonts=1
