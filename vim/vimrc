@@ -135,4 +135,4 @@ command FancyMake call FileSensitiveBuild()
 nnoremap <F9> :FancyMake<cr>
 
 " Remove trailing whitespace on save
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.py :%s/\s\+$//e
