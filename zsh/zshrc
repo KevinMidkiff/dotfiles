@@ -1,0 +1,93 @@
+## ZSH Configuration
+## Kevin Midkiff
+
+zstyle :compinstall filename '/home/kmidkiff/.zshrc'
+autoload -Uz compinit colors vcs_info
+colors
+compinit
+
+REPORTTIME=3
+
+# Keep large history of commands
+HISTFILE=~/.zshhistfile
+HISTSIZE=5000
+SAVEHIST=5000
+
+# Add commands to history as they are entered, do not wait for shell exit
+setopt INC_APPEND_HISTORY
+
+# Remember command execution start time and duration
+setopt EXTENDED_HISTORY
+
+# Do not duplicate commands in the history
+setopt HIST_IGNORE_ALL_DUPS
+
+# PS1 Configuration / Styling
+zstyle ':completion:*' completer _complete _correct _approximate
+zstyle ':vcs_info:*' stagedstr '%F{green}●%f '
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f '
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git*' formats "%F{9}%b%f %u%c"
+
+_setup_ps1() {
+    vcs_info
+    GLYPH="▲"
+    [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
+    # PS1=" %(?.%F{blue}.%F{red})$GLYPH%f %(1j.%F{cyan}[%j]%f .)%F{blue}%~%f %(!.%F{red}#%f .)"
+    PS1=" %(?.%F{146}.%F{red})$GLYPH%f %F{146}%(4~|%B...%b/%3~|%~)%f "
+    RPROMPT="$vcs_info_msg_0_"
+}
+_setup_ps1
+
+
+# Key bindings & Vim mode
+zle-keymap-select () {
+ _setup_ps1
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+zle-line-init () {
+  zle -K viins
+}
+zle -N zle-line-init
+bindkey -v
+bindkey "^R" history-incremental-pattern-search-backward
+
+# Global editor
+export EDITOR="vim"
+
+# Aliases
+alias zshconfig="$EDITOR ~/.zshrc"
+alias zshsource="source ~/.zshrc"
+
+# Set ls color if available
+ls --color=auto &> /dev/null
+if [ $? -eq 0 ] ; then
+    alias ls="ls --color=auto"
+    alias ll="ls --color=auto -lH"
+    alias l="ls --color=auto -la"
+else
+    alias ll="ls -lH"
+    alias l="ls -la"
+fi
+
+# Tmux specfic configurations
+export TERM=xterm-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
+
+# Rust! :D
+source ~/.cargo/env
+
+# Go :(
+export GOPATH=~/go/
+
+# Add stuff to PATH
+export PATH=$PATH:/usr/local/go/bin:$HOME/Workspace/scripts
+
+# virtualenv and virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Proxies
+source ~/.proxies.sh
