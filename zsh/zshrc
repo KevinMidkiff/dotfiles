@@ -34,7 +34,7 @@ base_color="146"
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     base_color="226"
-    ssh_msg="[ssh]"
+    ssh_msg="[ssh] "
 fi
 
 _setup_ps1() {
@@ -42,7 +42,7 @@ _setup_ps1() {
     GLYPH="▲"
     VCS=""
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
-    PS1=" %(?.%F{$base_color}.%F{red})$GLYPH%f $ssh_msg %F{$base_color}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    PS1=" %(?.%F{$base_color}.%F{red})$GLYPH%f $ssh_msg%F{$base_color}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
 }
 _setup_ps1
 
