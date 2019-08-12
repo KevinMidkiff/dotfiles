@@ -23,7 +23,7 @@ setopt EXTENDED_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 
 # PS1 Configuration / Styling
-zstyle ':completion:*' completer _complete _correct _approximate
+zstyle ':completion:*' menu select completer _complete _correct _approximate
 zstyle ':vcs_info:*' stagedstr ' %F{green}●%f'
 zstyle ':vcs_info:*' unstagedstr ' %F{yellow}●%f'
 zstyle ':vcs_info:git:*' check-for-changes true
