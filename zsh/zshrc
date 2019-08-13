@@ -103,6 +103,14 @@ export VIRTUALENVWRAPPER_PYTHON=`which python3`
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Proxies
-if [ -f "~/.proxies.sh" ] ; then
+if [[ -f ~/.proxies.sh ]] ; then
     source ~/.proxies.sh
 fi
+
+# Add local zshrc file
+if [[ -f ~/.zshrc.local ]] ; then
+    source ~/.zshrc.local
+fi
+
+# Start SSH Agent
+#[ -n "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"
