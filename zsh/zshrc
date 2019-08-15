@@ -23,20 +23,21 @@ setopt EXTENDED_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 
 # PS1 Configuration / Styling
+# Variable prompt if SSH'ed into the system
+base_color="146"
+git_branch_color="9"
+ssh_msg=""
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    base_color="9"
+    git_branch_color="146"
+    ssh_msg="[ssh] "
+fi
+
 zstyle ':completion:*' menu select completer _complete _correct _approximate
 zstyle ':vcs_info:*' stagedstr ' %F{green}●%f'
 zstyle ':vcs_info:*' unstagedstr ' %F{yellow}●%f'
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git*' formats " (%F{9}%b%f%u%c)"
-
-# Variable prompt if SSH'ed into the system
-base_color="146"
-ssh_msg=""
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    #base_color="226"
-    base_color="194"
-    ssh_msg="[ssh] "
-fi
+zstyle ':vcs_info:git*' formats " (%F{$git_branch_color}%b%f%u%c)"
 
 _setup_ps1() {
     vcs_info
