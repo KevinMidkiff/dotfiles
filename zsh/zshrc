@@ -99,10 +99,12 @@ export GOPATH=~/go/
 # Add stuff to PATH
 export PATH=$PATH:/usr/local/go/bin:$HOME/Workspace/scripts
 
-# virtualenv and virtualenvwrapper
+# virtualenv and virtualenvwrapper (only if it is installed)
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=`which python3`
-source /usr/local/bin/virtualenvwrapper.sh
+if [[ -f /usr/local/bin/virtualenvwrapper.sh ]] ; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 
 # Proxies
 if [[ -f ~/.proxies.sh ]] ; then
