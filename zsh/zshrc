@@ -33,7 +33,8 @@ zstyle ':vcs_info:git*' formats " (%F{9}%b%f%u%c)"
 base_color="146"
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    base_color="226"
+    #base_color="226"
+    base_color="194"
     ssh_msg="[ssh] "
 fi
 
