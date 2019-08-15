@@ -113,4 +113,6 @@ if [[ -f ~/.zshrc.local ]] ; then
 fi
 
 # Start SSH Agent
-#[ -n "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval "$(ssh-agent -s)"
+fi
