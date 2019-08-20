@@ -28,9 +28,9 @@ base_color="146"
 git_branch_color="9"
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    base_color="9"
-    git_branch_color="146"
-    ssh_msg="[ssh] "
+    #base_color="9"
+    #git_branch_color="146"
+    ssh_msg="[$(hostname)] "
 fi
 
 zstyle ':completion:*' menu select completer _complete _correct _approximate
@@ -42,9 +42,11 @@ zstyle ':vcs_info:git*' formats " (%F{$git_branch_color}%b%f%u%c)"
 _setup_ps1() {
     vcs_info
     GLYPH="▲"
+    ROOT=""
     VCS=""
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
-    PS1=" %(?.%F{$base_color}.%F{red})$GLYPH%f $ssh_msg%F{$base_color}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    [[ $EUID -eq 0 ]] && ROOT="%F{9}[root]%f "
+    PS1=" $ROOT%(?.%F{$base_color}.%F{red})$GLYPH%f $ssh_msg%F{$base_color}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
 }
 _setup_ps1
 
