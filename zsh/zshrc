@@ -22,6 +22,9 @@ setopt EXTENDED_HISTORY
 # Do not duplicate commands in the history
 setopt HIST_IGNORE_ALL_DUPS
 
+# Add auto change directories
+setopt AUTO_CD
+
 # PS1 Configuration / Styling
 # Variable prompt if SSH'ed into the system
 primary="146"
