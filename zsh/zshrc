@@ -123,7 +123,14 @@ if [[ -f ~/.zshrc.local ]] ; then
     source ~/.zshrc.local
 fi
 
-# Start SSH Agent
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-    eval "$(ssh-agent -s)"
+# Get location ZSH scripts
+zshrc_file=${HOME}/.zshrc
+if [[ -L $zshrc_file ]] ; then
+    zshrc_file="`readlink $zshrc_file`"
 fi
+scripts="`dirname $zshrc_file`/scripts"
+
+# Load SSH agent
+idents="`ls $HOME/.ssh/*id_rsa | tr '\n' '\0' | xargs -0 -n 1 basename`"
+zstyle :omz:plugins:ssh-agent identities $idents
+source ${scripts}/ssh-agent.plugin.zsh
