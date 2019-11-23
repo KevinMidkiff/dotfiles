@@ -47,9 +47,11 @@ _setup_ps1() {
     GLYPH="▲"
     ROOT=""
     VCS=""
+    VENV=""
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
-    PS1=" $ROOT%(?.%F{$primary}.%F{$accent})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent}[`basename $VIRTUAL_ENV`]%f "
+    PS1=" $VENV$ROOT%(?.%F{$primary}.%F{$accent})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
 }
 _setup_ps1
 
