@@ -138,8 +138,6 @@ if [[ -L $zshrc_file ]] ; then
 fi
 scripts="`dirname $zshrc_file`/scripts"
 
-echo $scripts
-
 # Load SSH agent
 idents="`ls $HOME/.ssh/*id_rsa | tr '\n' '\0' | xargs -0 -n 1 basename`"
 zstyle :omz:plugins:ssh-agent identities $idents
