@@ -134,7 +134,7 @@ fi
 # Get location ZSH scripts
 zshrc_file=${HOME}/.zshrc
 if [[ -L $zshrc_file ]] ; then
-    zshrc_file="${HOME}/`readlink $zshrc_file`"
+    zshrc_file="`readlink $zshrc_file`"
 fi
 scripts="`dirname $zshrc_file`/scripts"
 
