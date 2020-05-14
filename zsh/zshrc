@@ -30,16 +30,17 @@ setopt AUTO_CD
 primary="146"
 accent="9"
 accent2="120"
+accent3="122"
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     primary="9"
     accent="146"
-    ssh_msg="[$(hostname)] "
+    ssh_msg="%F{$accent3}[$(hostname)]%f "
 fi
 
 zstyle ':completion:*' menu select completer _complete _correct _approximate
-zstyle ':vcs_info:*' stagedstr ' %F{green}●%f'
-zstyle ':vcs_info:*' unstagedstr ' %F{yellow}●%f'
+zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
+zstyle ':vcs_info:*' unstagedstr ' %F{yellow}~%f'
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git*' formats " (%F{$accent}%b%f%u%c)"
 
@@ -134,7 +135,8 @@ fi
 # Get location ZSH scripts
 zshrc_file=${HOME}/.zshrc
 if [[ -L $zshrc_file ]] ; then
-    zshrc_file="${HOME}/`readlink $zshrc_file`"
+    # zshrc_file="${HOME}/`readlink $zshrc_file`"
+    zshrc_file="`readlink $zshrc_file`"
 fi
 scripts="`dirname $zshrc_file`/scripts"
 
