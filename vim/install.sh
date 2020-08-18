@@ -139,24 +139,39 @@ if [ -d ~/.vim/bundle/Vundle.vim ] ; then
     check_error "Failed to delete old Vundle installation"
 fi
 
+if [ ! -d ~/.vim/colors/ ] ; then
+    mkdir -p ~/.vim/colors/
+    check_error "Failed to create ~/.vim/colors/ folder"
+fi
+
+# Install themes
+
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 check_error "Failed to clone Vundle"
 
 if [ -d ./badwolf/ ] ; then
-    sudo rm -r ./badwolf/
+    rm -r ./badwolf/
     check_error "Failed to delete old badwolf git repository directory"
 fi
 
 git clone https://github.com/sjl/badwolf.git ./badwolf/
 check_error "Failed to clone badwolf vim theme"
 
-if [ ! -d ~/.vim/colors/ ] ; then
-    mkdir -p ~/.vim/colors/
-    check_error "Failed to create ~/.vim/colors/ folder"
-fi
-
 cp badwolf/colors/badwolf.vim ~/.vim/colors/
 check_error "Failed to copy badwolf theme to ~/.vim/colors/ directory"
+
+if [ -d ./gruvbox/ ] ; then
+    rm -r ./gruvbox/
+    check_error "Failed to delete old gruvbox git repository directory"
+fi
+
+git clone https://github.com/morhetz/gruvbox.git ./gruvbox/
+check_error "Failed to clone gruvbox vim theme"
+
+cp gruvbox/colors/gruvbox.vim ~/.vim/colors/
+check_error "Failed to copy gruvbox theme to ~/.vim/colors/ directory"
+
+# Done installing themes
 
 pushd ${PWD}
 cd ${HOME}
@@ -198,7 +213,7 @@ if [[ $setup_ycm -eq 1 ]] ; then
     echo_info "Setting up YCM with $params"
 
     cd ~/.vim/bundle/YouCompleteMe/
-    ./install.sh $params 
+    ./install.sh $params
     check_error "Failed to install YouCompleteMe vim plugin"
 fi
 

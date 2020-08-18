@@ -47,6 +47,8 @@ Plugin 'dracula/vim'
 
 Plugin 'fatih/vim-go'
 
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " ----- END VUNDLE CONFIGURATIONS -----
@@ -64,9 +66,9 @@ autocmd FileType less setlocal shiftwidth=2 tabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType markdown setlocal nofoldenable
 
-colorscheme badwolf
-" colorscheme tender
-" colorscheme dracula
+set background=dark
+colorscheme gruvbox
+" colorscheme badwolf
 
 set cursorline
 set showmatch
