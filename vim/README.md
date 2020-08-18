@@ -99,9 +99,11 @@ Below are a list of other themes I like:
 - Antares: https://github.com/Haron-Prime/Antares  
 
 # Helpful Links
-Below are sources that I used in creating this vim configuration.  
-    1. Installing Powerline: (http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)  
-    2. Powerline Documentation: (https://powerline.readthedocs.org/en/latest/installation/linux.html)  
-    3. Powerline Fonts: (https://github.com/powerline/fonts)  
-    4. Vundle Repo: (https://github.com/VundleVim/Vundle.vim)  
-    5. Badwolf Vim Theme Repo: (https://github.com/sjl/badwolf)
+Below are sources that I used in creating this vim configuration.
+
+* [Installing Powerline](http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin)  
+* [Powerline Documentation](https://powerline.readthedocs.org/en/latest/installation/linux.html)  
+* [Powerline Fonts](https://github.com/powerline/fonts)  
+* [Vundle Repo](https://github.com/VundleVim/Vundle.vim)  
+* [Badwolf Vim Theme Repo](https://github.com/sjl/badwolf)
+* [Installing Powerline fonts on Windows](https://medium.com/@slmeng/how-to-install-powerline-fonts-in-windows-b2eedecace58)
