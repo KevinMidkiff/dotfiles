@@ -46,11 +46,13 @@ zstyle ':vcs_info:git*' formats " (%F{$accent}%b%f%u%c)"
 
 _setup_ps1() {
     vcs_info
-    GLYPH="▲"
+    # GLYPH="▲"
+    GLYPH="%F{$accent}<<I>>%f"
     ROOT=""
     VCS=""
     VENV=""
-    [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
+    # [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
+    [ "x$KEYMAP" = "xvicmd" ] && GLYPH="<<N>>"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
     [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
     PS1=" $VENV$ROOT%(?.%F{$primary}.%F{$accent})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
@@ -138,9 +140,14 @@ if [[ -L $zshrc_file ]] ; then
     # zshrc_file="${HOME}/`readlink $zshrc_file`"
     zshrc_file="`readlink $zshrc_file`"
 fi
-scripts="`dirname $zshrc_file`/scripts"
+scripts="${HOME}/`dirname $zshrc_file`/scripts"
 
 # Load SSH agent
 idents="`ls $HOME/.ssh/*id_rsa | tr '\n' '\0' | xargs -0 -n 1 basename`"
 zstyle :omz:plugins:ssh-agent identities $idents
 source ${scripts}/ssh-agent.plugin.zsh
+
+highlight="${HOME}/.zsh-configuration/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+if [ -f "$highlight" ] ; then
+    source $highlight
+fi
