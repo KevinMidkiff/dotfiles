@@ -1,0 +1,6 @@
+badwolf/
+gruvbox/
+fonts/
+**/*.swp
+**/*.swo
+**/.DS_Store
