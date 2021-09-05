@@ -1,0 +1,153 @@
+## ZSH Configuration
+## Kevin Midkiff
+
+zstyle :compinstall filename '$HOME/.zshrc'
+autoload -Uz compinit colors vcs_info
+colors
+compinit
+
+REPORTTIME=3
+
+# Keep large history of commands
+HISTFILE=~/.zshhistfile
+HISTSIZE=5000
+SAVEHIST=5000
+
+# Add commands to history as they are entered, do not wait for shell exit
+setopt INC_APPEND_HISTORY
+
+# Remember command execution start time and duration
+setopt EXTENDED_HISTORY
+
+# Do not duplicate commands in the history
+setopt HIST_IGNORE_ALL_DUPS
+
+# Add auto change directories
+setopt AUTO_CD
+
+# PS1 Configuration / Styling
+# Variable prompt if SSH'ed into the system
+primary="146"
+accent="9"
+accent2="120"
+accent3="122"
+ssh_msg=""
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    primary="9"
+    accent="146"
+    ssh_msg="%F{$accent3}[$(hostname)]%f "
+fi
+
+zstyle ':completion:*' menu select completer _complete _correct _approximate
+zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
+zstyle ':vcs_info:*' unstagedstr ' %F{yellow}~%f'
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git*' formats " (%F{$accent}%b%f%u%c)"
+
+_setup_ps1() {
+    vcs_info
+    GLYPH="%F{$accent}▲%f"
+    # GLYPH="%F{$accent}<<I>>%f"
+    ROOT=""
+    VCS=""
+    VENV=""
+    [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
+    # [ "x$KEYMAP" = "xvicmd" ] && GLYPH="<<N>>"
+    [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
+    [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
+    PS1=" $VENV$ROOT%(?.%F{$primary}.%F{$accent})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+}
+_setup_ps1
+
+# Key bindings & Vim mode
+zle-keymap-select () {
+ _setup_ps1
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+zle-line-init () {
+  zle -K viins
+}
+zle -N zle-line-init
+bindkey -v
+bindkey "^R" history-incremental-pattern-search-backward
+
+# Global editor
+export EDITOR="vim"
+
+# Aliases
+alias zshconfig="$EDITOR ~/.zshrc"
+alias zshsource="source ~/.zshrc"
+
+# Set ls color if available
+alias ll="ls -lH"
+alias l="ls -la"
+
+arch="$(uname 2> /dev/null)"
+if [ "$arch" = "Linux" ] ; then
+    ls --color=auto &> /dev/null
+    if [ $? -eq 0 ] ; then
+        alias ls="ls --color=auto"
+        alias ll="ls --color=auto -lH"
+        alias l="ls --color=auto -la"
+    fi
+elif [ "$arch" = "Darwin" ] ; then
+    alias ls="ls -G"
+    alias ll="ls -G -lH"
+    alias l="ls -G -la"
+fi
+
+# Tmux specfic configurations
+export TERM=xterm-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
+
+# Rust! :D
+if [[ -f ~/.cargo/env ]] ; then
+    source ~/.cargo/env
+fi
+
+# Go :(
+export GOPATH=~/go/
+
+# Add stuff to PATH
+export PATH=$PATH:/usr/local/go/bin:$HOME/Workspace/scripts
+
+# Add Go pakcage binaries if they exist
+if [[ -d $GOPATH ]] ; then
+    export PATH=$PATH:$GOPATH/bin/
+fi
+
+# Add local zshrc file
+if [[ -f ~/.zshrc.local ]] ; then
+    source ~/.zshrc.local
+fi
+
+# virtualenv and virtualenvwrapper (only if it is installed)
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=`which python3`
+if [[ -f /usr/local/bin/virtualenvwrapper.sh ]] ; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+# Proxies
+if [[ -f ~/.proxies.sh ]] ; then
+    source ~/.proxies.sh
+fi
+
+# Get location ZSH scripts
+zshrc_file=${HOME}/.zshrc
+if [[ -L $zshrc_file ]] ; then
+    # zshrc_file="${HOME}/`readlink $zshrc_file`"
+    zshrc_file="`readlink $zshrc_file`"
+fi
+scripts="${HOME}/`dirname $zshrc_file`/scripts"
+
+# Load SSH agent
+idents=( "id_rsa")
+zstyle :omz:plugins:ssh-agent identities $idents
+source ${scripts}/ssh-agent.plugin.zsh
+
+highlight="${HOME}/.zsh-configuration/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+if [ -f "$highlight" ] ; then
+    source $highlight
+fi
