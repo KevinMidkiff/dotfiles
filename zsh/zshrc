@@ -1,7 +1,8 @@
 ## ZSH Configuration
 ## Kevin Midkiff
 
-ZSH_DIR=$(dirname $0:A)
+ZSH_FILE=$(readlink $HOME/.zshrc)
+ZSH_DIR=$(dirname ${ZSH_FILE})
 
 zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit colors vcs_info
