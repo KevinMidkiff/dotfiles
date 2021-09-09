@@ -1,6 +1,8 @@
 ## ZSH Configuration
 ## Kevin Midkiff
 
+ZSH_DIR=$(dirname $0:A)
+
 zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit colors vcs_info
 colors
@@ -134,20 +136,21 @@ if [[ -f ~/.proxies.sh ]] ; then
     source ~/.proxies.sh
 fi
 
-# Get location ZSH scripts
-zshrc_file=${HOME}/.zshrc
-if [[ -L $zshrc_file ]] ; then
-    # zshrc_file="${HOME}/`readlink $zshrc_file`"
-    zshrc_file="`readlink $zshrc_file`"
-fi
-scripts="${HOME}/`dirname $zshrc_file`/scripts"
-
 # Load SSH agent
-idents=( "id_rsa")
-zstyle :omz:plugins:ssh-agent identities $idents
-source ${scripts}/ssh-agent.plugin.zsh
+if [ -z "${idents[*]}" ] ; then
+    if [ -f "$HOME/.ssh/id_rsa" ] ; then
+        idents=( "id_rsa" )
+    else
+        idents=( )
+    fi
+fi
 
-highlight="${HOME}/.dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+if [ ${#idents[@]} -gt 0 ] ; then
+    zstyle :omz:plugins:ssh-agent identities $idents
+    source $ZSH_DIR/scripts/ssh-agent.plugin.zsh
+fi
+
+highlight="$ZSH_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 if [ -f "$highlight" ] ; then
     source $highlight
 fi
