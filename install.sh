@@ -116,9 +116,9 @@ if [[ $install_deps -eq 1 ]] ; then
         check_error "Failed to install $package"
     done
 
-    log_info "Installing Python powerline-status"
-    sudo -H pip install powerline-status
-    check_error "Failed to install pip powerline-status package"
+    # log_info "Installing Python powerline-status"
+    # sudo -H pip install powerline-status
+    # check_error "Failed to install pip powerline-status package"
 fi
 
 if [[ $install_vim_conf -eq 1 ]] ; then
