@@ -147,7 +147,7 @@ idents=( "id_rsa")
 zstyle :omz:plugins:ssh-agent identities $idents
 source ${scripts}/ssh-agent.plugin.zsh
 
-highlight="${HOME}/.zsh-configuration/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+highlight="${HOME}/.dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 if [ -f "$highlight" ] ; then
     source $highlight
 fi
