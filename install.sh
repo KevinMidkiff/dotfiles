@@ -6,9 +6,10 @@ GREEN="\033[0;32m"
 NC='\033[0m' # No Color
 
 cwd=${PWD}
-needed_packages=(
+dependencies=(
     "vim"
     "git"
+    "python3-dev"
     "python-pip"
     "cmake"
     "tmux"
@@ -105,20 +106,11 @@ git submodule update --init
 
 if [[ $install_deps -eq 1 ]] ; then
     log_info "Installing dependencies"
-    for package in ${needed_packages[@]}
-    do
-        log_info "Installing $package"
-        if [[ $EUID -eq 0 ]]; then
-            apt-get -y install $package
-        else
-            sudo apt-get -y install $package
-        fi
-        check_error "Failed to install $package"
-    done
-
-    # log_info "Installing Python powerline-status"
-    # sudo -H pip install powerline-status
-    # check_error "Failed to install pip powerline-status package"
+    if [[ $EUID -eq 0 ]]; then
+        apt -y install ${dependencies[*]}
+    else
+        sudo apt -y install ${dependencies[*]}
+    fi
 fi
 
 if [[ $install_vim_conf -eq 1 ]] ; then

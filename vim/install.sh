@@ -83,13 +83,10 @@ check_error "Failed to move 10-powerline-symbols.otf to /etc/fonts/conf.d/"
 # check_error "fc-cache update failed"
 
 # Removing fonts directory if it already exists
-if [ -d ./fonts/ ] ; then
-    rm -r ./fonts/
-    check_error "Failed to remove old ./fonts/ git repository directory"
+if [ ! -d ./fonts/ ] ; then
+    git clone https://github.com/powerline/fonts.git
+    check_error "Failed to clone https://github.com/powerline/fonts.git"
 fi
-
-git clone https://github.com/powerline/fonts.git
-check_error "Failed to clone https://github.com/powerline/fonts.git"
 
 cd fonts
 check_error "Fonts git repository folder does not exist"
@@ -115,24 +112,19 @@ fi
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 check_error "Failed to clone Vundle"
 
-if [ -d ./badwolf/ ] ; then
-    rm -r ./badwolf/
-    check_error "Failed to delete old badwolf git repository directory"
+if [ ! -d ./badwolf/ ] ; then
+    git clone https://github.com/sjl/badwolf.git ./badwolf/
+    check_error "Failed to clone badwolf vim theme"
 fi
 
-git clone https://github.com/sjl/badwolf.git ./badwolf/
-check_error "Failed to clone badwolf vim theme"
 
 cp badwolf/colors/badwolf.vim ~/.vim/colors/
 check_error "Failed to copy badwolf theme to ~/.vim/colors/ directory"
 
-if [ -d ./gruvbox/ ] ; then
-    rm -r ./gruvbox/
-    check_error "Failed to delete old gruvbox git repository directory"
+if [ ! -d ./gruvbox/ ] ; then
+    git clone https://github.com/morhetz/gruvbox.git ./gruvbox/
+    check_error "Failed to clone gruvbox vim theme"
 fi
-
-git clone https://github.com/morhetz/gruvbox.git ./gruvbox/
-check_error "Failed to clone gruvbox vim theme"
 
 cp gruvbox/colors/gruvbox.vim ~/.vim/colors/
 check_error "Failed to copy gruvbox theme to ~/.vim/colors/ directory"

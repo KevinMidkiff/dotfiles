@@ -59,5 +59,5 @@ if [ -f ~/.zshrc ] ; then
     check_error "Failed to move old ~/.zshrc file"
 fi
 
-ln -s $cwd/zshrc .zshrc
+ln -s $cwd/zshrc ~/.zshrc
 check_error "Failed to create soft link to $cwd/zshrc in ${HOME} directory"
