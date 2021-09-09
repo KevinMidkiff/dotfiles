@@ -26,3 +26,16 @@ usage: ./install.sh [-h|--help] [--install-deps] [--no-vim] [--no-zsh] [--no-tmu
 
 > **NOTE:** If `--install-deps` is specified, then you may be prompted for your
 > password by `apt-get`.
+
+## A Note on Vim
+
+The Vim configuration in this repo depends on Vim 8+. Ubuntu does not have
+the ability to install this version by default. To install Vim 8, execute the
+following commands:
+
+```sh
+$ sudo add-apt-repository ppa:jonathonf/vim
+$ sudo apt update
+$ sudo apt install vim
+```
+> Source: https://itsfoss.com/vim-8-release-install/
