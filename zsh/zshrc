@@ -30,15 +30,58 @@ setopt AUTO_CD
 
 # PS1 Configuration / Styling
 # Variable prompt if SSH'ed into the system
-primary="146"
-accent="9"
-accent2="120"
-accent3="122"
+use_default_style=0
+if [ -f "${HOME}/.zshrc.style" ] ; then
+    source "${HOME}/.zshrc.style"
+
+    if [ -z "$primary" ] ; then
+        echo "ERROR: style missing 'primary' value"
+        use_default_style=1
+    fi
+    if [ -z "$accent" ] ; then
+        echo "ERROR: style missing 'accent' value"
+        use_default_style=1
+    fi
+    if [ -z "$accent2" ] ; then
+        echo "ERROR: style missing 'accent2' value"
+        use_default_style=1
+    fi
+    if [ -z "$accent3" ] ; then
+        echo "ERROR: style missing 'accent3' value"
+        use_default_style=1
+    fi
+else
+    use_default_style=1
+fi
+
+if [ $use_default_style -eq 1 ] ; then
+    # Default style
+    primary="146"
+    accent="9"
+    accent2="120"
+    accent3="122"
+fi
+
 ssh_msg=""
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] ; then
     primary="9"
     accent="146"
+fi
+
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -f "${HOME}/.zshrc.show-host" ]; then
     ssh_msg="%F{$accent3}[$(hostname)]%f "
+fi
+
+# Check for user data function to attach to the prompt
+has_user_data=0
+if [ -f "${HOME}/.zshrc.user-data" ] ; then
+    source "${HOME}/.zshrc.user-data"
+    has_user_data=1
+    if typeset -f prompt_user_data > /dev/null ; then
+    else
+        echo "ERROR: ~/.zshrc.user-data missing 'prompt_user_data' function"
+        has_user_data=0
+    fi
 fi
 
 zstyle ':completion:*' menu select completer _complete _correct _approximate
@@ -47,18 +90,30 @@ zstyle ':vcs_info:*' unstagedstr ' %F{yellow}~%f'
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git*' formats " (%F{$accent}%b%f%u%c)"
 
+# Determine glyph sequence
+if [ -f "${HOME}/.zshrc.ascii-glyph" ] ; then
+   INSERT_GLYPH="<<I>>"
+   NORMAL_GLYPH="<<N>>"
+else
+   INSERT_GLYPH="▲"
+   NORMAL_GLYPH="▼"
+fi
+
 _setup_ps1() {
     vcs_info
-    GLYPH="%F{$accent}▲%f"
-    # GLYPH="%F{$accent}<<I>>%f"
+    GLYPH="%F{$primary}${INSERT_GLYPH}%f"
     ROOT=""
     VCS=""
     VENV=""
-    [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
-    # [ "x$KEYMAP" = "xvicmd" ] && GLYPH="<<N>>"
+    [ "x$KEYMAP" = "xvicmd" ] && GLYPH="${NORMAL_GLYPH}"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
     [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
-    PS1=" $VENV$ROOT%(?.%F{$primary}.%F{$accent})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    if [ $has_user_data -eq 1 ] ; then
+        USRDATA="%F{$accent2}[`prompt_user_data`]%f "
+    else
+        USRDATA=""
+    fi
+    PS1=" $USRDATA$VENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
 }
 _setup_ps1
 
