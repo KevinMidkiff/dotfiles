@@ -10,7 +10,7 @@ dependencies=(
     "vim"
     "git"
     "python3-dev"
-    "python-pip"
+    "python3-pip"
     "cmake"
     "tmux"
     "zsh"
