@@ -156,8 +156,8 @@ elif [ "$arch" = "Darwin" ] ; then
 fi
 
 # Tmux specfic configurations
-export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM=screen-256color
+export TERM=screen-256color
+# [ -n "$TMUX" ] && export TERM=screen-256color
 
 # Rust! :D
 if [[ -f ~/.cargo/env ]] ; then
