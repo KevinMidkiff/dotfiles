@@ -48,6 +48,8 @@ return packer.startup(function(use)
   use "windwp/nvim-autopairs"
   use "numToStr/Comment.nvim"
   use "junegunn/goyo.vim"
+  use 'kyazdani42/nvim-web-devicons'
+  use 'kyazdani42/nvim-tree.lua'
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
