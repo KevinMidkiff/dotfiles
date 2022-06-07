@@ -6,6 +6,7 @@ local options = {
     completeopt = { "menuone", "noselect" }, -- mostly just for cmp
     conceallevel = 0,                        -- so that `` is visible in markdown files
     fileencoding = "utf-8",                  -- the encoding written to a file
+    mouse = "a",
     hlsearch = true,                         -- highlight all matches on previous search pattern
     showmatch = true,
     incsearch = true,
