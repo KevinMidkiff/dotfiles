@@ -69,7 +69,7 @@ function usage() {
     echo -e "\t-h|--help      : Show this help"
     echo -e "\t--install-deps : Install linux dependencies"
     # echo -e "\t--no-vim       : Do not install vim configuration"
-    echo -e "\t--no-nvi       : Do not install neovim configuration"
+    echo -e "\t--no-nvim      : Do not install neovim configuration"
     echo -e "\t--no-zsh       : Do not install zsh configuration"
     echo -e "\t--no-tmux      : Do not install tmuxzsh configuration"
     # echo -e "\t--setup-ycm    : Setup the YCM plugin"
@@ -124,7 +124,7 @@ if [[ $install_deps -eq 1 ]] ; then
         sudo add-apt-repository ppa:neovim-ppa/stable
         sudo apt update
 
-        sudo apt -y install ${dependencies[*]}
+        sudo apt install -y ${dependencies[*]}
     fi
 fi
 
