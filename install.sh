@@ -14,6 +14,7 @@ dependencies=(
     "cmake"
     "tmux"
     "zsh"
+    "neovim"
 )
 
 function verify_not_root() {
@@ -67,18 +68,20 @@ function usage() {
     echo "usage: $1 [-h|--help] [--install-deps] [--no-vim] [--no-zsh] [--no-tmux] [--setup-ycm]"
     echo -e "\t-h|--help      : Show this help"
     echo -e "\t--install-deps : Install linux dependencies"
-    echo -e "\t--no-vim       : Do not install vim configuration"
+    # echo -e "\t--no-vim       : Do not install vim configuration"
+    echo -e "\t--no-nvi       : Do not install neovim configuration"
     echo -e "\t--no-zsh       : Do not install zsh configuration"
     echo -e "\t--no-tmux      : Do not install tmuxzsh configuration"
-    echo -e "\t--setup-ycm    : Setup the YCM plugin"
+    # echo -e "\t--setup-ycm    : Setup the YCM plugin"
     exit 0
 }
 
 install_deps=0
-install_vim_conf=1
+# install_vim_conf=1
+install_nvim_conf=1
 install_zsh_conf=1
 install_tmux_conf=1
-setup_ycm=0
+# setup_ycm=0
 
 for var in "$@" ; do
     case "$var" in
@@ -88,12 +91,14 @@ for var in "$@" ; do
             install_deps=1 ;;
         "--setup-ycm" )
             setup_ycm=1 ;;
-        "--no-vim" )
-            install_vim_conf=0 ;;
+        # "--no-vim" )
+        #     install_vim_conf=0 ;;
         "--no-zsh" )
             install_zsh_conf=0 ;;
         "--no-tmux" )
             install_tmux_conf=0 ;;
+        "--no-nvim" )
+            install_nvim_conf=0 ;;
     esac
 done
 
@@ -107,19 +112,33 @@ git submodule update --init
 if [[ $install_deps -eq 1 ]] ; then
     log_info "Installing dependencies"
     if [[ $EUID -eq 0 ]]; then
+        # Add neovim PPA
+        apt install -y software-properties-common
+        add-apt-repository ppa:neovim-ppa/stable
+        apt update
+
         apt -y install ${dependencies[*]}
     else
+        # Add neovim PPA
+        sudo apt install -y software-properties-common
+        sudo add-apt-repository ppa:neovim-ppa/stable
+        sudo apt update
+
         sudo apt -y install ${dependencies[*]}
     fi
 fi
 
-if [[ $install_vim_conf -eq 1 ]] ; then
-    params=""
-    if [[ $setup_ycm -eq 1 ]] ; then
-        params="--setup-ycm"
-    fi
+# if [[ $install_vim_conf -eq 1 ]] ; then
+#     params=""
+#     if [[ $setup_ycm -eq 1 ]] ; then
+#         params="--setup-ycm"
+#     fi
+# 
+#     install_config "vim" $params
+# fi
 
-    install_config "vim" $params
+if [[ $install_nvim_conf -eq 1 ]] ; then
+    install_config "nvim"
 fi
 
 if [[ $install_zsh_conf -eq 1 ]] ; then
