@@ -40,7 +40,7 @@ case "${uname_out}" in
         log_fatal "Unsupported OS: ${uname_out}" ;;
 esac
 
-if [ "${machine}" -eq "Linux" ] ; then
+if [[ "${machine}" -eq "Linux" ]] ; then
     if [ ! -d "~/.local/share/fonts" ] ; then
         log_info "Creating fonts directory"
         mkdir -p ~/.local/share/fonts
@@ -50,12 +50,17 @@ if [ "${machine}" -eq "Linux" ] ; then
     cd ~/.local/share/fonts 
     check_error "Failed to go to honts directory"
 
+    echo "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/$font_path"
+
     log_info "Downloading font: ${font_filename}"
     curl -fLo \
         "${font_filename}" \
-        https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/$font_path \
-        -p ~/.local/share/fonts
+        https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/${font_path}
     check_error "Failed to download font"
+
+    log_info "Reloading font cache"
+    fc-cache -f -v
+    check_error "Failed to rebuild font cache"
 else
     cd ~/Library/Fonts 
     check_error "Failed to go to ~/Library/Fonts"
