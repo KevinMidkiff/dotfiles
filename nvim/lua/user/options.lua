@@ -49,3 +49,10 @@ vim.wo.colorcolumn = '80'
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 -- vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function() 
+      vim.opt_local.shiftwidth = 2 
+      vim.opt_local.tabstop = 2
+  end
+})
