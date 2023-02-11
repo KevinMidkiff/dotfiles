@@ -94,6 +94,9 @@ return packer.startup(function(use)
 
   use {'iamcco/markdown-preview.nvim'}
 
+  -- vim-go
+  use 'fatih/vim-go'
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
