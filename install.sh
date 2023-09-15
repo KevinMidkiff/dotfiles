@@ -9,12 +9,12 @@ cwd=${PWD}
 dependencies=(
     "vim"
     "git"
+    "python3"
     "python3-dev"
     "python3-pip"
     "cmake"
     "tmux"
     "zsh"
-    "neovim"
 )
 
 function verify_not_root() {
