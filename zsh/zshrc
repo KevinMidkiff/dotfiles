@@ -136,6 +136,9 @@ export EDITOR="vim"
 # Aliases
 alias zshconfig="$EDITOR ~/.zshrc"
 alias zshsource="source ~/.zshrc"
+if [ ! -z "$(which nvim)" ] ; then
+    alias vim="nvim"
+fi
 
 # Set ls color if available
 alias ll="ls -lH"
@@ -156,8 +159,8 @@ elif [ "$arch" = "Darwin" ] ; then
 fi
 
 # Tmux specfic configurations
-export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM=screen-256color
+export TERM=screen-256color
+# [ -n "$TMUX" ] && export TERM=screen-256color
 
 # Rust! :D
 if [[ -f ~/.cargo/env ]] ; then
