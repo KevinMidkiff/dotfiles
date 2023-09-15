@@ -28,8 +28,9 @@ function check_error() {
     fi
 }
 
-font_filename="Hack Regular Nerd Font Complete.ttf"
-font_path="Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf"
+base_url="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts"
+font_filename="HackNerdFont-Regular.ttf"
+font_path="Hack/Regular"
 
 uname_out="$(uname -s)"
 
@@ -50,12 +51,10 @@ if [[ "${machine}" -eq "Linux" ]] ; then
     cd ~/.local/share/fonts 
     check_error "Failed to go to honts directory"
 
-    echo "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/$font_path"
-
     log_info "Downloading font: ${font_filename}"
     curl -fLo \
         "${font_filename}" \
-        https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/${font_path}
+        ${base_url}/${font_path}/${font_filename} 
     check_error "Failed to download font"
 
     log_info "Reloading font cache"
@@ -68,6 +67,6 @@ else
     log_info "Downloading font: ${font_filename}"
     curl -fLo \
         "${font_filename}" \
-        https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/$font_path
+        ${base_url}/${font_path}/${font_filename} 
     check_error "Failed to download font"
 fi
