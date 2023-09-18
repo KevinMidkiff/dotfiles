@@ -51,7 +51,6 @@ fi
 
 ln -sf ${PWD}/vimrc ~/.vimrc
 check_error "Failed to create soft link to $cwd/vimrc in ${HOME} directory"
-popd
 
 vim +PluginInstall +qall
 check_error "Failed to install Vundle plugins"
