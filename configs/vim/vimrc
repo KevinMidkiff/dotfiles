@@ -50,6 +50,8 @@ autocmd FileType markdown setlocal nofoldenable
 set background=dark
 colorscheme gruvbox
 
+" Set relative line numbers
+set relativenumber
 set cursorline
 set showmatch
 set incsearch
