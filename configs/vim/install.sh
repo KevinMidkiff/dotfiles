@@ -4,97 +4,17 @@
 #  ONLY USE THIS SCRIPT THROUGH THE TOP LEVEL INSTALL SCRIPT
 # ===============
 
-RED='\033[0;31m'
-YELLOW="\033[1;33m"
-GREEN="\033[0;32m"
-NC='\033[0m' # No Color
+source ${PWD}/../../scripts/utils.sh
 
-cwd=${PWD}
-
-function verify_not_root() {
-    if [[ $EUID -eq 0 ]]; then
-        echo -e "${RED}!!! ERROR: Should not be started as root${NC}" 1>&2
-        exit -1
-    fi
-}
-
-function log_warn() {
-    echo -e "${YELLOW}WARN: $1 ${NC}"
-}
-
-function log_info() {
-    echo -e "${GREEN}INFO: $1 ${NC}"
-}
-
-function log_error() {
-    echo -e "${RED}ERROR: $1 ${NC}"
-}
-
-function log_fatal() {
-    echo -e "${RED}FATAL: $1 ${NC}"
-    exit -1
-}
-
-function check_error() {
-    if [ $? -ne 0 ] ; then
-        log_fatal "$1"
-    fi
-}
-
-function usage() {
-    log_error "ONLY USE THIS SCRIPT THROUGH THE TOP LEVEL INSTALL SCRIPT"
-    exit 0
-}
-
-setup_cmd_t=0
-setup_ycm=0
-
-for var in "$@" ; do
-    case "$var" in
-        "-h" | "--help" )
-            usage $0 ;;
-        "--setup-cmd-t" )
-            setup_cmd_t=1 ;;
-        "--setup-ycm" )
-            setup_ycm=1 ;;
-    esac
-done
-
-if [ ! -d ~/.fonts/conf.d/ ]; then
-    log_info "Creating ~/.fonts/conf.d"
-    mkdir -p ~/.fonts/conf.d
-    check_error "Failed to create directory ~/.fonts/conf.d"
+if [ ! -d "${HOME}/.vim/" ] ; then
+    mkdir ${HOME}/.vim/
+    check_error "Failed to create ~/.vim"
 fi
 
-# Add other settings installation
-wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-check_error "Failed to get PowerlineSymbols.otf"
-
-mv PowerlineSymbols.otf ~/.fonts/
-check_error "Failed to move PowerlineSymbols.otf to ~/.fonts"
-
-wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-check_error "Failed to get 10-powerline-symbols.conf"
-
-mv 10-powerline-symbols.conf ~/.fonts/conf.d/
-check_error "Failed to move 10-powerline-symbols.otf to /etc/fonts/conf.d/"
-
-# sudo fc-cache -vf
-# check_error "fc-cache update failed"
-
-# Removing fonts directory if it already exists
-if [ ! -d ./fonts/ ] ; then
-    git clone https://github.com/powerline/fonts.git
-    check_error "Failed to clone https://github.com/powerline/fonts.git"
+if [ ! -d "${HOME}/.vim/bundle" ] ; then
+    mkdir ~/.vim/bundle/
+    check_error "Failed to create ~/.vim/bundle"
 fi
-
-cd fonts
-check_error "Fonts git repository folder does not exist"
-
-./install.sh
-check_error "Failed to install fonts"
-
-cd ..
 
 # Deleting old vundle installation
 if [ -d ~/.vim/bundle/Vundle.vim ] ; then
@@ -112,15 +32,6 @@ fi
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 check_error "Failed to clone Vundle"
 
-if [ ! -d ./badwolf/ ] ; then
-    git clone https://github.com/sjl/badwolf.git ./badwolf/
-    check_error "Failed to clone badwolf vim theme"
-fi
-
-
-cp badwolf/colors/badwolf.vim ~/.vim/colors/
-check_error "Failed to copy badwolf theme to ~/.vim/colors/ directory"
-
 if [ ! -d ./gruvbox/ ] ; then
     git clone https://github.com/morhetz/gruvbox.git ./gruvbox/
     check_error "Failed to clone gruvbox vim theme"
@@ -129,58 +40,23 @@ fi
 cp gruvbox/colors/gruvbox.vim ~/.vim/colors/
 check_error "Failed to copy gruvbox theme to ~/.vim/colors/ directory"
 
-# Done installing themes
-
-pushd ${PWD}
-cd ${HOME}
-
 if [ -f ~/.vimrc ] ; then
-    log_warn "Moving old ~/.vimrc file to ~/old_vimrc"
-    mv ~/.vimrc ~/old_vimrc
-    check_error "Failed to move old ~/.vimrc file"
+    test -h ~/.vimrc
+    if [[ $? -ne 0 ]] ; then
+        log_warn "Moving old ~/.vimrc file to ~/old_vimrc"
+        mv ~/.vimrc ~/old_vimrc
+        check_error "Failed to move old ~/.vimrc file"
+    fi
 fi
 
-ln -s $cwd/vimrc .vimrc
+ln -sf ${PWD}/vimrc ~/.vimrc
 check_error "Failed to create soft link to $cwd/vimrc in ${HOME} directory"
 popd
 
 vim +PluginInstall +qall
 check_error "Failed to install Vundle plugins"
 
-if [[ $setup_cmd_t -eq 1 ]] ; then
-    log_info "Setting up command-t plugin"
-    cd ~/.vim/bundle/command-t/ruby/command-t/
-    check_error "Failed to go to ~/.vim/bundle/command-t/ruby/command-t/"
-
-    ruby extconf.rb
-    check_error "Failed to execute command-t extconf.rb script"
-
-    make
-    check_error "Make failed for command-t vim plugin"
-fi
-
-if [[ $setup_ycm -eq 1 ]] ; then
-    params="--clang-completer"
-
-    which cargo > /dev/null
-    if [ $? -eq 0 ] ; then
-        params="$params --rust-completer"
-    fi
-
-    which go > /dev/null
-    if  [ $? -eq 0 ] ; then
-        params="$params --go-completer"
-    fi
-
-    log_info "Setting up YCM with $params"
-
-    cd ~/.vim/bundle/YouCompleteMe/
-    ./install.sh $params
-    check_error "Failed to install YouCompleteMe vim plugin"
-fi
-
 echo
-log_info "DONE! Do not forget to add 'export TERM=screen-256color' to your "\
-    "~/.bashrc, and you may need to change your terminal font to a powerlines"\
-    " one"
+log_info "VIM CONFIG DONE! Do not forget to add 'export TERM=screen-256color'"\
+    "to your environment"
 echo

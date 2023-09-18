@@ -52,5 +52,5 @@ if [ ! -d "${HOME}/.config" ] ; then
     check_error "Failed to create directory ${HOME}/.config"
 fi
 
-ln -s ${PWD} ${HOME}/.config/nvim
+ln -sf ${PWD} ${HOME}/.config/nvim
 check_error "Failed to create soft link to ${PWD}/ directory"
