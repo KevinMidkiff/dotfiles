@@ -15,5 +15,5 @@ if [ -f ~/.tmux.conf ] ; then
     fi
 fi
 
-ln -sf $cwd/tmux.conf ~/.tmux.conf
+ln -sf ${PWD}/tmux.conf ~/.tmux.conf
 check_error "Failed to create soft link to $cwd/tmux.conf in ${HOME} directory"
