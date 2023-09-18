@@ -11,7 +11,7 @@ function exec-install() {
     cd $dir
     check_error "Failed to go to directory '$dir'"
 
-    log_info "Installing $dir configuration"
+    log_info "Installing $(basename ${dir}) configuration"
 
     ./install.sh ${params[*]}
     check_error "Failed to install $dir configuration"
@@ -102,6 +102,5 @@ if [[ ${install_all} -eq 1 ]] ; then
 fi
 
 for i in ${configs[*]} ; do
-    log_info "Installing config for application: ${i}"
     exec-install ${PWD}/configs ${i}
 done
