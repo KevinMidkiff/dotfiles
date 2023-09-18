@@ -136,9 +136,6 @@ export EDITOR="vim"
 # Aliases
 alias zshconfig="$EDITOR ~/.zshrc"
 alias zshsource="source ~/.zshrc"
-if [ ! -z "$(which nvim)" ] ; then
-    alias vim="nvim"
-fi
 
 # Set ls color if available
 alias ll="ls -lH"

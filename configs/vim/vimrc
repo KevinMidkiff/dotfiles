@@ -1,4 +1,4 @@
-"r---------- Vundle Configurations -------
+"---------- Vundle Configurations -------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -10,40 +10,19 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-" Command-T
-Plugin 'wincent/command-t'
-
 " GitRepo plugin Fugitive
 Plugin 'tpope/vim-fugitive'
-
-" Vim Colorschemes
-Plugin 'flazz/vim-colorschemes'
 
 " Status line plugin
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-" Less Syntax Highlighting Plugin
-Plugin 'groenewege/vim-less'
-
 " Enabling Markdown
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
-" NERDTree for better folder viewing
-Plugin 'scrooloose/nerdTree'
-
 " rust-lang syntax support
 Plugin 'rust-lang/rust.vim'
-
-" You Complete Me
-Plugin 'Valloric/YouCompleteMe'
-Bundle 'rdnetto/YCM-Generator'
-
-" Adding tender theme
-Plugin 'jacoborus/tender.vim'
-
-Plugin 'dracula/vim'
 
 Plugin 'fatih/vim-go'
 
@@ -70,8 +49,9 @@ autocmd FileType markdown setlocal nofoldenable
 
 set background=dark
 colorscheme gruvbox
-" colorscheme badwolf
 
+" Set relative line numbers
+set relativenumber
 set cursorline
 set showmatch
 set incsearch
@@ -82,13 +62,8 @@ set hidden
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 let g:airline#extensions#tabline#enabled = 1
 
-" auto-close preview window
-let g:ycm_autoclose_preview_window_after_completion = 1
-
 " Airline themes
 let g:airline_theme='base16'
-" let g:airline_theme='raven'
-" let g:airline_theme='tender'
 
 set laststatus=2
 let g:airline_powerline_fonts=1
@@ -102,9 +77,6 @@ map rr :source ~/.vimrc<CR>
 " turn off search highlight
 nnoremap <leader>, :nohlsearch<CR>
 
-" toggle NERDTree
-nnoremap <leader>ft :NERDTreeToggle<CR>
-
 " show buffers
 nnoremap <leader>l :ls<CR>
 
@@ -115,31 +87,6 @@ nnoremap <leader>b :b
 nnoremap <leader>fed :e ~/.vimrc<CR>
 
 nnoremap <leader>c 80|
-
-" Perform a build properly depending on the project type
-function! FileSensitiveBuild()
-    if $TMUX != ''
-        if filereadable("CMakeLists.txt") && isdirectory("build")
-            let build_cmd = "make"
-        elseif filereadable("Cargo.toml")
-            let build_cmd = "cargo check"
-        else
-            let build_cmd = "make"
-        endif
-            echom system("tmux send-keys -t right \"" . build_cmd . "\" C-m")
-    else
-        if filereadable("CMakeLists.txt") && isdirectory("build")
-            execute ":Make -C build<CR>"
-        elseif filereadable("Cargo.toml")
-            execute ":Dispatch cargo check<CR>"
-        else
-            execute ":Make"
-        endif
-    endif
-endfunction
-command FancyMake call FileSensitiveBuild()
-
-nnoremap <F9> :FancyMake<cr>
 
 " Remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e

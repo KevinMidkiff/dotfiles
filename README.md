@@ -5,37 +5,43 @@ This repository contains various configuration files.
 
 ## Installation
 
-To install the various configurations, use the "install.sh" script. To install
-all of the configurations, simply execute:
+The `install.sh` script is the main entrypoint into installing the applications
+and various configurations for those applications.
+
+To install all expected packages for Ubuntu and the configuration for those
+applications execute the following command:
 
 ```sh
-$ ./install.sh
+./install.sh -p ubuntu -c all
 ```
 
-The script has the following command line options:
+In the command above, the `-p ubuntu` specifies to install the packages for the
+Ubuntu platform and the `-c all` tells the installer to install the
+configuration for all supported applications.
 
-```
-usage: ./install.sh [-h|--help] [--install-deps] [--no-vim] [--no-zsh] [--no-tmux] [--setup-ycm]
-	-h|--help      : Show this help
-	--install-deps : Install linux dependencies
-	--no-vim       : Do not install vim configuration
-	--no-zsh       : Do not install zsh configuration
-	--no-tmux      : Do not install tmuxzsh configuration
-	--setup-ycm    : Setup the YCM plugin
-```
+The applications supported are listed below:
 
-> **NOTE:** If `--install-deps` is specified, then you may be prompted for your
-> password by `apt-get`.
+- nvim
+- zsh
+- vim
+- tmux
 
-## A Note on Vim
-
-The Vim configuration in this repo depends on Vim 8+. Ubuntu does not have
-the ability to install this version by default. To install Vim 8, execute the
-following commands:
+To install the configuration any individual application execute the `install.sh`
+script as follows: `./install.sh -c <package>`. For example:
 
 ```sh
-$ sudo add-apt-repository ppa:jonathonf/vim
-$ sudo apt update
-$ sudo apt install vim
+# Installs only the configuration for ZSH
+./install.sh -c zsh
 ```
-> Source: https://itsfoss.com/vim-8-release-install/
+
+## `install.sh` Usage
+
+```
+usage: ./install.sh [-h] [-c <package> -c ...] [-p <platform>]
+        -h               - Show this help
+        -c <package>     - Install configuration for the specified package
+        -p <platform>    - Install expected applications for the platform
+```
+
+See the [`packages`](./packages/) directory and [`configs`](./configs/)
+directory to see all supported platforms and applications.
