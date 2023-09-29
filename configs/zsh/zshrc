@@ -4,6 +4,13 @@
 ZSH_FILE=$(readlink $HOME/.zshrc)
 ZSH_DIR=$(dirname ${ZSH_FILE})
 
+# Add local zshrc file, allows for specifying config values specific to the
+# current environment, as well as specifying configuration variables that will
+# affect the overall ZSH configuration.
+if [[ -f ~/.zshrc.local ]] ; then
+    source ~/.zshrc.local
+fi
+
 zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit colors vcs_info
 colors
@@ -64,8 +71,9 @@ fi
 
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] ; then
-    primary="9"
-    accent="146"
+    # Flip-flow primary and accent for ssh'ing into a system
+    primary="${accent}"
+    accent="${primary}"
 fi
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -f "${HOME}/.zshrc.show-host" ]; then
@@ -99,21 +107,61 @@ else
    NORMAL_GLYPH="▼"
 fi
 
+# Initialize conda
+if [ -z "${CONDA_DIR}" ] ; then
+    # TODO(kmidkiff): Assuming just miniconda3 for now, may need to expand this
+    # in the future if I switch to using anaconda3 and/or miniconda3.
+    CONDA_DIR="${HOME}/miniconda3"
+elif [ ! -d "${CONDA_DIR}" ] ; then
+    echo "ERROR: Provided CONDA_DIR value ('${CONDA_DIR}') does not exist"
+fi
+
+# Checking again here and not emitting an error because the error should be
+# printed above. It is not a strict requirement to have conda installed, so if
+# it is not desired to be installed do not be annoying and print an error.
+if [ -d "${CONDA_DIR}" ] ; then
+    CONDA_BIN="${CONDA_DIR}/bin/conda"
+    if [ ! -f "${CONDA_BIN}" ] ; then
+        echo "ERROR: Conda directory ('${CONDA_DIR}') missing binary '${CONDA_BIN}"
+    else
+        # NOTE: Below code borrowed from conda init
+        __conda_setup="$(${CONDA_BIN} 'shell.zsh' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            eval "$__conda_setup"
+        else
+            # if [ -f "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh" ]; then
+            #     . "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh"
+            # else
+            #     export PATH="/home/kmidkiff/miniconda3/bin:$PATH"
+            # fi
+            echo "ERROR: __conda_setup failed"
+        fi
+        unset __conda_setup
+    fi
+fi
+
 _setup_ps1() {
     vcs_info
     GLYPH="%F{$primary}${INSERT_GLYPH}%f"
     ROOT=""
     VCS=""
-    VENV=""
+    # VENV=""
+    CNDENV=""
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="${NORMAL_GLYPH}"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
-    [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
+    if [ "${CONDA_DEFAULT_ENV}" != "base" ] ; then
+        CNDENV="%F{$accent2}[conda:%f %F{$accent}${CONDA_DEFAULT_ENV}%f%F{$accent2}]%f "
+    fi
+    # See virtualenv comment above
+    # [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
     if [ $has_user_data -eq 1 ] ; then
         USRDATA="%F{$accent2}[`prompt_user_data`]%f "
     else
         USRDATA=""
     fi
-    PS1=" $USRDATA$VENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    # See virtualenv comment above
+    # PS1=" $USRDATA$VENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    PS1=" $USRDATA$CNDENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
 }
 _setup_ps1
 
@@ -175,17 +223,18 @@ if [[ -d $GOPATH ]] ; then
     export PATH=$PATH:$GOPATH/bin/
 fi
 
-# Add local zshrc file
-if [[ -f ~/.zshrc.local ]] ; then
-    source ~/.zshrc.local
-fi
-
+######
+# TODO(kmidkiff): Commenting this out for now, because it has issues and I no
+# longer use virtualenv. Keeping for potentially reenabling in the future if
+# necessary
+#
 # virtualenv and virtualenvwrapper (only if it is installed)
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=`which python3`
-if [[ -f /usr/local/bin/virtualenvwrapper.sh ]] ; then
-    source /usr/local/bin/virtualenvwrapper.sh
-fi
+# export WORKON_HOME=$HOME/.virtualenvs
+# export VIRTUALENVWRAPPER_PYTHON=`which python3`
+# if [[ -f /usr/local/bin/virtualenvwrapper.sh ]] ; then
+#     source /usr/local/bin/virtualenvwrapper.sh
+# fi
+######
 
 # Proxies
 if [[ -f ~/.proxies.sh ]] ; then
