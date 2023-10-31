@@ -107,36 +107,45 @@ else
    NORMAL_GLYPH="▼"
 fi
 
-# Initialize conda
-if [ -z "${CONDA_DIR}" ] ; then
-    # TODO(kmidkiff): Assuming just miniconda3 for now, may need to expand this
-    # in the future if I switch to using anaconda3 and/or miniconda3.
-    CONDA_DIR="${HOME}/miniconda3"
-elif [ ! -d "${CONDA_DIR}" ] ; then
-    echo "ERROR: Provided CONDA_DIR value ('${CONDA_DIR}') does not exist"
+which conda > /dev/null
+if [ $? -ne 0 ] ; then
+    conda_installed=0
+else
+    conda_installed=1
 fi
 
-# Checking again here and not emitting an error because the error should be
-# printed above. It is not a strict requirement to have conda installed, so if
-# it is not desired to be installed do not be annoying and print an error.
-if [ -d "${CONDA_DIR}" ] ; then
-    CONDA_BIN="${CONDA_DIR}/bin/conda"
-    if [ ! -f "${CONDA_BIN}" ] ; then
-        echo "ERROR: Conda directory ('${CONDA_DIR}') missing binary '${CONDA_BIN}"
-    else
-        # NOTE: Below code borrowed from conda init
-        __conda_setup="$(${CONDA_BIN} 'shell.zsh' 'hook' 2> /dev/null)"
-        if [ $? -eq 0 ]; then
-            eval "$__conda_setup"
+if [ ${conda_installed} -eq 1 ] ; then
+    # Initialize conda
+    if [ -z "${CONDA_DIR}" ] ; then
+        # TODO(kmidkiff): Assuming just miniconda3 for now, may need to expand this
+        # in the future if I switch to using anaconda3 and/or miniconda3.
+        CONDA_DIR="${HOME}/miniconda3"
+    elif [ ! -d "${CONDA_DIR}" ] ; then
+        echo "ERROR: Provided CONDA_DIR value ('${CONDA_DIR}') does not exist"
+    fi
+
+    # Checking again here and not emitting an error because the error should be
+    # printed above. It is not a strict requirement to have conda installed, so if
+    # it is not desired to be installed do not be annoying and print an error.
+    if [ -d "${CONDA_DIR}" ] ; then
+        CONDA_BIN="${CONDA_DIR}/bin/conda"
+        if [ ! -f "${CONDA_BIN}" ] ; then
+            echo "ERROR: Conda directory ('${CONDA_DIR}') missing binary '${CONDA_BIN}"
         else
-            # if [ -f "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh" ]; then
-            #     . "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh"
-            # else
-            #     export PATH="/home/kmidkiff/miniconda3/bin:$PATH"
-            # fi
-            echo "ERROR: __conda_setup failed"
+            # NOTE: Below code borrowed from conda init
+            __conda_setup="$(${CONDA_BIN} 'shell.zsh' 'hook' 2> /dev/null)"
+            if [ $? -eq 0 ]; then
+                eval "$__conda_setup"
+            else
+                # if [ -f "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh" ]; then
+                #     . "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh"
+                # else
+                #     export PATH="/home/kmidkiff/miniconda3/bin:$PATH"
+                # fi
+                echo "ERROR: __conda_setup failed"
+            fi
+            unset __conda_setup
         fi
-        unset __conda_setup
     fi
 fi
 
@@ -149,7 +158,7 @@ _setup_ps1() {
     CNDENV=""
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="${NORMAL_GLYPH}"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
-    if [ "${CONDA_DEFAULT_ENV}" != "base" ] ; then
+    if [ ! -z "${CONDA_DEFAULT_ENV}" ] && [ "${CONDA_DEFAULT_ENV}" != "base" ] ; then
         CNDENV="%F{$accent2}[conda:%f %F{$accent}${CONDA_DEFAULT_ENV}%f%F{$accent2}]%f "
     fi
     # See virtualenv comment above

@@ -15,7 +15,8 @@ case "${uname_out}" in
         log_fatal "Unsupported OS: ${uname_out}" ;;
 esac
 
-if [[ "${machine}" -eq "Linux" ]] ; then
+if [[ "${machine}" == "Linux" ]] ; then
+    log_info "Linux???"
     if [ ! -d "~/.local/share/fonts" ] ; then
         log_info "Creating fonts directory"
         mkdir -p ~/.local/share/fonts
