@@ -42,11 +42,19 @@ function check_error() {
 
 function assert-linux() {
     uname_out="$(uname -s)"
-    echo ${uname_out}
     if [[ "${uname_out}" =~ "Linux"* ]] ; then
         log_info "Running on Linux"
     else
         log_fatal "Not running on Linux"
+    fi
+}
+
+function assert-macos() {
+    uname_out="$(uname -s)"
+    if [[ "${uname_out}" =~ "Darwin"* ]] ; then
+        log_info "Running on Mac"
+    else
+        log_fatal "Not running on Mac"
     fi
 }
 
