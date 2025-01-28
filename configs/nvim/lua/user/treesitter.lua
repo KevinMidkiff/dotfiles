@@ -3,6 +3,9 @@ if not status_ok then
   return
 end
 
+require('ts_context_commentstring').setup {}
+vim.g.skip_ts_context_commentstring_module = true
+
 configs.setup {
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)

@@ -68,8 +68,9 @@ return packer.startup(function(use)
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/nvim-lsp-installer" -- simple to use language server installer
-  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use "williamboman/mason.nvim"
+  -- use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
     -- Telescope
   use "nvim-telescope/telescope.nvim"
@@ -85,6 +86,7 @@ return packer.startup(function(use)
 
   -- Git
   use "lewis6991/gitsigns.nvim"
+  use "sindrets/diffview.nvim"
 
   -- lualine
   use {

@@ -4,3 +4,6 @@ neovim
 tree
 htop
 tmux
+wget
+jq
+bat

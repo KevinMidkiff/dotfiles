@@ -1,0 +1,38 @@
+set visualbell
+set noerrorbells
+
+let mapleader="\<SPACE>"
+syntax on
+set nu
+set expandtab
+set tabstop=4
+set shiftwidth=4
+filetype plugin indent on
+autocmd FileType less setlocal shiftwidth=2 tabstop=2
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType markdown setlocal nofoldenable
+set relativenumber
+set cursorline
+set showmatch
+set incsearch
+set hlsearch
+
+" ==== Keybinds ====
+nnoremap <leader>, :nohlsearch<CR>
+
+map <leader>ff <action>(GotoFile)
+map <leader>fb <Action>(RecentFiles)
+
+" Go to code
+nmap <leader>gd <Action>(GotoDeclaration)
+nmap <leader>gy <Action>(GotoTypeDeclaration)
+nmap <leader>gi <Action>(GotoImplementation)
+nmap <leader>gu <Action>(ShowUsages)
+nmap <leader>gt <Action>(GotoTest)
+nmap <leader>gf <Action>(Back)
+nmap <leader>gb <Action>(Forward)
+
+" Display options
+map <leader>dd <action>(ToggleDistractionFreeMode)
+map <leader>dz <action>(ToggleZenMode)
+map <leader>df <action>(ToggleFullScreen)
