@@ -1,0 +1,10 @@
+[window]
+opacity = 0.95
+blur = true
+title = "happy-place"
+dynamic_title = false
+decorations = "Full"
+
+[font]
+normal = { family = "Hack Nerd Font", style = "Regular" }
+size = 13

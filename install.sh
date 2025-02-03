@@ -7,14 +7,18 @@ function exec-install() {
     args=( $@ )
     params=( "${args[@]:1}" )
     dir=$1/$2
+    pkg_name=$(basename ${dir})
 
     cd $dir
     check_error "Failed to go to directory '$dir'"
 
-    log_info "Installing $(basename ${dir}) configuration"
-
-    ./install.sh ${params[*]}
-    check_error "Failed to install $dir configuration"
+    if [ ! -f "${PWD}/install.sh" ] ; then
+        log_warn "No installer for ${pkg_name}"
+    else
+        log_info "Installing ${pkg_name} configuration"
+        ./install.sh ${params[*]}
+        check_error "Failed to install $dir configuration"
+    fi
 
     cd ${cwd}
     check_error "Failed to return to root directory"
