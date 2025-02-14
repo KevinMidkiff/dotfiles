@@ -11,6 +11,11 @@ if [[ -f ~/.zshrc.local ]] ; then
     source ~/.zshrc.local
 fi
 
+# Set default tmux color if not set in local
+if [ -z "${TMUX_COLOUR}" ] ; then
+    export TMUX_COLOUR=colour171
+fi
+
 zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit colors vcs_info
 colors
