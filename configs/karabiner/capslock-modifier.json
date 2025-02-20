@@ -1,0 +1,10 @@
+{
+    "manipulators": [
+        {
+            "description": "Change caps_lock to My Hyper Key.",
+            "from": { "key_code": "caps_lock" },
+            "to": [{ "key_code": "right_option" }],
+            "type": "basic"
+        }
+    ]
+}
