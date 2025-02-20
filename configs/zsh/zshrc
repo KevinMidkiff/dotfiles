@@ -203,6 +203,11 @@ alias zshsource="source ~/.zshrc"
 alias ll="ls -lH"
 alias l="ls -la"
 
+if [ ! -z "$(which batcat)" ] ; then
+    alias cat="bat"
+    alias jat="bat -l json"
+fi
+
 arch="$(uname 2> /dev/null)"
 if [ "$arch" = "Linux" ] ; then
     ls --color=auto &> /dev/null
@@ -290,3 +295,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+uname_out="$(uname -s)"
+if [[ "${uname_out}" =~ "Darwin"* ]] ; then
+    export PATH=${PATH}:/opt/homebrew/bin/
+fi
