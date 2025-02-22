@@ -262,10 +262,14 @@ fi
 
 # Load SSH agent
 if [ -z "${idents[*]}" ] ; then
+    idents=( )
+
     if [ -f "$HOME/.ssh/id_rsa" ] ; then
-        idents=( "id_rsa" )
-    else
-        idents=( )
+        idents+=( "id_rsa" )
+    fi
+
+    if [ -f "$HOME/.ssh/id_ed25519" ] ; then
+        idents+=( "id_ed25519" )
     fi
 fi
 
