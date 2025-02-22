@@ -97,7 +97,8 @@ if [ -f "${HOME}/.zshrc.user-data" ] ; then
     fi
 fi
 
-zstyle ':completion:*' menu select completer _complete _correct _approximate
+# zstyle ':completion:*' menu select completer _complete _correct _approximate
+zstyle ':completion:*' menu select
 zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
 zstyle ':vcs_info:*' unstagedstr ' %F{yellow}~%f'
 zstyle ':vcs_info:git:*' check-for-changes true
@@ -277,6 +278,15 @@ fi
 highlight="$ZSH_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 if [ -f "$highlight" ] ; then
     source $highlight
+fi
+
+autosuggest="$ZSH_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
+echo "${autosuggest}"
+if [ -f "$autosuggest" ] ; then
+    echo 'loading'
+    source $autosuggest
+else
+    echo 'not loading'
 fi
 
 # >>> conda initialize >>>
