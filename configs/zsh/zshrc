@@ -3,6 +3,18 @@
 
 ZSH_FILE=$(readlink $HOME/.zshrc)
 ZSH_DIR=$(dirname ${ZSH_FILE})
+DOTFILES="${ZSH_DIR}/../../"
+
+if [ ! -d "${DOTFILES}" ] ; then
+    echo "!!! ERROR: Failed to find .dotfiles directory at '${DOTFILES}'"
+else
+    source ${DOTFILES}/scripts/utils.sh
+fi
+
+zstyle :compinstall filename '$HOME/.zshrc'
+autoload -Uz compinit colors vcs_info
+colors
+compinit
 
 # Add local zshrc file, allows for specifying config values specific to the
 # current environment, as well as specifying configuration variables that will
@@ -15,11 +27,6 @@ fi
 if [ -z "${TMUX_COLOUR}" ] ; then
     export TMUX_COLOUR=colour171
 fi
-
-zstyle :compinstall filename '$HOME/.zshrc'
-autoload -Uz compinit colors vcs_info
-colors
-# compinit
 
 REPORTTIME=3
 
@@ -154,6 +161,22 @@ if [ ${conda_installed} -eq 1 ] ; then
     fi
 fi
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+conda_cmd="${HOME}/miniconda3/bin/conda"
+__conda_setup="$(${conda_cmd} 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="${HOME}/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 _setup_ps1() {
     vcs_info
     GLYPH="%F{$primary}${INSERT_GLYPH}%f"
@@ -235,11 +258,27 @@ fi
 export GOPATH=~/go/
 
 # Add stuff to PATH
-export PATH=$PATH:/usr/local/go/bin:$HOME/Workspace/scripts
+export PATH=$PATH:/usr/local/go/bin
 
 # Add Go pakcage binaries if they exist
 if [[ -d $GOPATH ]] ; then
     export PATH=$PATH:$GOPATH/bin/
+fi
+
+# Add NVM setup
+
+if [ -d "${HOME}/.nvm" ] ; then
+    export NVM_DIR="$HOME/.nvm"
+
+    if is_macos ; then
+        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+        [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+    elif is_linux ; then
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    else
+        log_error "Setting up nvm on unknown system: $(uname -s)"
+    fi
 fi
 
 ######
@@ -288,21 +327,6 @@ if [ -f "$autosuggest" ] ; then
     source $autosuggest
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-conda_cmd="${HOME}/miniconda3/bin/conda"
-__conda_setup="$(${conda_cmd} 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="${HOME}/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 uname_out="$(uname -s)"
 if [[ "${uname_out}" =~ "Darwin"* ]] ; then
