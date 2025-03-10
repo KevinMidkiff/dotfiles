@@ -334,6 +334,6 @@ if [[ "${uname_out}" =~ "Darwin"* ]] ; then
 fi
 
 # UV setup if it's installed
-if [ -d "${HOME}/.local/bin/env"] ; then
+if [ -d "${HOME}/.local/bin/env" ] ; then
     source "$HOME/.local/bin/env"
 fi
