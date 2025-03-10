@@ -10,6 +10,7 @@ lspconfig.setup {
 -- Install lsp servers
 require("lspconfig").lua_ls.setup {}
 require("lspconfig").rust_analyzer.setup {}
+require("venv-selector").setup {}
 
 local on_attach = require("user.lsp.opts").on_attach
 local on_init = require("user.lsp.opts").on_init

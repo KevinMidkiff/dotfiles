@@ -80,6 +80,11 @@ return packer.startup(function(use)
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
+
+  use ({
+    "linux-cultist/venv-selector.nvim",
+    branch = 'regexp'
+  })
   -- use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 

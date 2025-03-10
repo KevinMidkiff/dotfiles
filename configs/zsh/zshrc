@@ -332,3 +332,8 @@ uname_out="$(uname -s)"
 if [[ "${uname_out}" =~ "Darwin"* ]] ; then
     export PATH=${PATH}:/opt/homebrew/bin/
 fi
+
+# UV setup if it's installed
+if [ -d "${HOME}/.local/bin/env"]
+    source "$HOME/.local/bin/env"
+fi
