@@ -7,3 +7,4 @@ cmake
 tmux
 zsh
 bat
+fd-find
