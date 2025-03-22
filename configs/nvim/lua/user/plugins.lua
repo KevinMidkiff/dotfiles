@@ -69,6 +69,8 @@ return packer.startup(function(use)
   use ({
     'nvimdev/lspsaga.nvim',
     after = 'nvim-lspconfig',
+    -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
+    commit = 'd027f8b',
     config = function()
         require('lspsaga').setup({})
     end,
