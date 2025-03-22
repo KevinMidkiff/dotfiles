@@ -8,3 +8,6 @@ decorations = "Full"
 [font]
 normal = { family = "Hack Nerd Font", style = "Regular" }
 size = 13
+
+[bell]
+duration = 0
