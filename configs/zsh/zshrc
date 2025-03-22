@@ -221,8 +221,7 @@ export EDITOR="vim"
 # Aliases
 alias zshconfig="$EDITOR ~/.zshrc"
 alias zshsource="source ~/.zshrc"
-
-# Set ls color if available
+alias dotfiles='cd ${HOME}/.dotfiles/'
 alias ll="ls -lH"
 alias l="ls -la"
 
