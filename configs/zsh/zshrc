@@ -265,19 +265,26 @@ if [[ -d $GOPATH ]] ; then
 fi
 
 # Add NVM setup
+export NVM_DIR="$HOME/.nvm"
+if [ -d "${NVM_DIR}" ] ; then
+    # NVM is insanely slow to load... Lazy load it when the first NVM command is
+    # executed
+    function lazy_load_nvm() {
+        echo -e "\033[1;33m>>> lazy loading nvm...\033[0m"
+        unalias nvm
+        if is_macos ; then
+            [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+            [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+        elif is_linux ; then
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        else
+            log_error "Setting up nvm on unknown system: $(uname -s)"
+        fi
+        nvm ${@[*]}
+    }
 
-if [ -d "${HOME}/.nvm" ] ; then
-    export NVM_DIR="$HOME/.nvm"
-
-    if is_macos ; then
-        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-        [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-    elif is_linux ; then
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-    else
-        log_error "Setting up nvm on unknown system: $(uname -s)"
-    fi
+    alias nvm="lazy_load_nvm"
 fi
 
 ######
