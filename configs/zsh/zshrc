@@ -119,63 +119,51 @@ else
    NORMAL_GLYPH="▼"
 fi
 
-which conda > /dev/null
-if [ $? -ne 0 ] ; then
-    conda_installed=0
-else
-    conda_installed=1
+# Initialize conda
+if [ -z "${CONDA_DIR}" ] ; then
+    # TODO(kmidkiff): Assuming just miniconda3 for now, may need to expand this
+    # in the future if I switch to using anaconda3 and/or miniconda3.
+    export CONDA_DIR="${HOME}/miniconda3"
 fi
 
-if [ ${conda_installed} -eq 1 ] ; then
-    # Initialize conda
-    if [ -z "${CONDA_DIR}" ] ; then
-        # TODO(kmidkiff): Assuming just miniconda3 for now, may need to expand this
-        # in the future if I switch to using anaconda3 and/or miniconda3.
-        CONDA_DIR="${HOME}/miniconda3"
-    elif [ ! -d "${CONDA_DIR}" ] ; then
-        echo "ERROR: Provided CONDA_DIR value ('${CONDA_DIR}') does not exist"
-    fi
+if [ -d "${CONDA_DIR}" ] ; then
+    function lazy_conda() {
+        echo -e "\033[1;33m>>> lazy loading conda...\033[0m"
 
-    # Checking again here and not emitting an error because the error should be
-    # printed above. It is not a strict requirement to have conda installed, so if
-    # it is not desired to be installed do not be annoying and print an error.
-    if [ -d "${CONDA_DIR}" ] ; then
-        CONDA_BIN="${CONDA_DIR}/bin/conda"
-        if [ ! -f "${CONDA_BIN}" ] ; then
-            echo "ERROR: Conda directory ('${CONDA_DIR}') missing binary '${CONDA_BIN}"
-        else
-            # NOTE: Below code borrowed from conda init
-            __conda_setup="$(${CONDA_BIN} 'shell.zsh' 'hook' 2> /dev/null)"
-            if [ $? -eq 0 ]; then
-                eval "$__conda_setup"
+        unalias conda
+
+        # Checking again here and not emitting an error because the error should be
+        # printed above. It is not a strict requirement to have conda installed, so if
+        # it is not desired to be installed do not be annoying and print an error.
+        if [ -d "${CONDA_DIR}" ] ; then
+            CONDA_BIN="${CONDA_DIR}/bin/conda"
+            if [ ! -f "${CONDA_BIN}" ] ; then
+                echo "ERROR: Conda directory ('${CONDA_DIR}') missing binary '${CONDA_BIN}"
             else
-                # if [ -f "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh" ]; then
-                #     . "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh"
-                # else
-                #     export PATH="/home/kmidkiff/miniconda3/bin:$PATH"
-                # fi
-                echo "ERROR: __conda_setup failed"
+                # NOTE: Below code borrowed from conda init
+                __conda_setup="$(${CONDA_BIN} 'shell.zsh' 'hook' 2> /dev/null)"
+                if [ $? -eq 0 ]; then
+                    eval "$__conda_setup"
+                else
+                    # if [ -f "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh" ]; then
+                    #     . "/home/kmidkiff/miniconda3/etc/profile.d/conda.sh"
+                    # else
+                    #     export PATH="/home/kmidkiff/miniconda3/bin:$PATH"
+                    # fi
+                    if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
+                        . "${HOME}/miniconda3/etc/profile.d/conda.sh"
+                    else
+                        export PATH="${HOME}/miniconda3/bin:$PATH"
+                    fi
+                    echo "ERROR: __conda_setup failed"
+                fi
+                unset __conda_setup
             fi
-            unset __conda_setup
         fi
-    fi
+        conda ${@[*]}
+    }
+    alias conda="lazy_conda"
 fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-conda_cmd="${HOME}/miniconda3/bin/conda"
-__conda_setup="$(${conda_cmd} 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="${HOME}/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 _setup_ps1() {
     vcs_info
@@ -183,12 +171,17 @@ _setup_ps1() {
     ROOT=""
     VCS=""
     # VENV=""
-    CNDENV=""
+    # CNDENV=""
+    ENV=""
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="${NORMAL_GLYPH}"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
     if [ ! -z "${CONDA_DEFAULT_ENV}" ] && [ "${CONDA_DEFAULT_ENV}" != "base" ] ; then
-        CNDENV="%F{$accent2}[conda:%f %F{$accent}${CONDA_DEFAULT_ENV}%f%F{$accent2}]%f "
+        ENV="%F{$accent2}[conda:%f %F{$accent}${CONDA_DEFAULT_ENV}%f%F{$accent2}]%f "
     fi
+    if [ ! -z "${PYENV_VERSION}" ] ; then
+        ENV="%F{$accent2}[pyenv:%f %F{$accent}${PYENV_VERSION}%f%F{$accent2}]%f "
+    fi
+
     # See virtualenv comment above
     # [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
     if [ $has_user_data -eq 1 ] ; then
@@ -198,7 +191,7 @@ _setup_ps1() {
     fi
     # See virtualenv comment above
     # PS1=" $USRDATA$VENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
-    PS1=" $USRDATA$CNDENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    PS1=" $USRDATA$ENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
 }
 _setup_ps1
 
