@@ -280,6 +280,16 @@ if [ -d "${NVM_DIR}" ] ; then
     alias nvm="lazy_load_nvm"
 fi
 
+# Pyenv setup
+which pyenv > /dev/null
+if [ $? -eq 0 ] ; then
+    echo "init pyenv"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
+
 ######
 # TODO(kmidkiff): Commenting this out for now, because it has issues and I no
 # longer use virtualenv. Keeping for potentially reenabling in the future if
