@@ -8,35 +8,51 @@
 RED='\033[0;31m'
 YELLOW="\033[1;33m"
 GREEN="\033[0;32m"
+GREY="\033[2;49m"
 NC='\033[0m' # No Color
+
+function ts() {
+    date --iso-8601="seconds"
+}
+
+function log() {
+    level=$1
+    color=$2
+    msg=$3
+    echo -e "${GREY}[$(ts)${NC} ${color}${level}${NC}${GREY}]${NC} ${msg}"
+}
+
+function log_warn() {
+    log "WARN" "${YELLOW}" "$1"
+}
+
+function log_info() {
+    log "INFO" "${GREEN}" "$1"
+}
+
+function log_error() {
+    log "ERROR" "${RED}" "$1"
+}
+
+function log_fatal() {
+    log "FATAL" "${RED}" "${RED}$1${NC}"
+    exit -1
+}
+
+function assert() {
+    if [ $? -ne 0 ] ; then
+        log_fatal "$1"
+    fi
+}
+
+function check_error() {
+    assert "${1}"
+}
 
 function verify_not_root() {
     if [[ $EUID -eq 0 ]]; then
         echo -e "${RED}!!! ERROR: Should not be started as root${NC}" 1>&2
         exit -1
-    fi
-}
-
-function log_warn() {
-    echo -e "${YELLOW}WARN: $1 ${NC}"
-}
-
-function log_info() {
-    echo -e "${GREEN}INFO: $1 ${NC}"
-}
-
-function log_error() {
-    echo -e "${RED}ERROR: $1 ${NC}"
-}
-
-function log_fatal() {
-    echo -e "${RED}FATAL: $1 ${NC}"
-    exit -1
-}
-
-function check_error() {
-    if [ $? -ne 0 ] ; then
-        log_fatal "$1"
     fi
 }
 
