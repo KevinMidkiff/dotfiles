@@ -12,9 +12,10 @@ else
 fi
 
 zstyle :compinstall filename '$HOME/.zshrc'
-autoload -Uz compinit colors vcs_info
+autoload -Uz compinit colors vcs_info bashcompinit
 colors
 compinit
+bashcompinit
 
 # Add local zshrc file, allows for specifying config values specific to the
 # current environment, as well as specifying configuration variables that will
@@ -219,8 +220,13 @@ alias ll="ls -lH"
 alias l="ls -la"
 
 if [ ! -z "$(which batcat)" ] ; then
-    alias cat="bat"
-    alias jat="bat -l json"
+    if is_macos ; then
+        alias cat="bat"
+        alias jat="bat -l json"
+    else
+        alias cat="batcat"
+        alias jat="batcat -l json"
+    fi
 fi
 
 arch="$(uname 2> /dev/null)"
@@ -281,9 +287,9 @@ if [ -d "${NVM_DIR}" ] ; then
 fi
 
 # Pyenv setup
-which pyenv > /dev/null
-if [ $? -eq 0 ] ; then
-    echo "init pyenv"
+export PYENV_ROOT="$HOME/.pyenv"
+if [ -d "${PYENV_ROOT}" ] ; then
+    export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
