@@ -1,22 +1,18 @@
--- require("user.archive_lsp.handlers").setup()
 require("mason").setup()
+require("lsp-format").setup {}
+require("venv-selector").setup {}
 
 local lspconfig = require "mason-lspconfig"
 
 lspconfig.setup {
-    ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "gopls" },
+  ensure_installed = { "lua_ls", "rust_analyzer", "ruff", "clangd", },
 }
-
--- Install lsp servers
-require("lspconfig").lua_ls.setup {}
-require("lspconfig").rust_analyzer.setup {}
-require("venv-selector").setup {}
 
 local on_attach = require("user.lsp.opts").on_attach
 local on_init = require("user.lsp.opts").on_init
 local capabilities = require("user.lsp.opts").capabilities
 
-local disabled_servers = { }
+local disabled_servers = {}
 
 lspconfig.setup_handlers {
   -- Automatically configure the LSP installed
@@ -33,7 +29,7 @@ lspconfig.setup_handlers {
       capabilities = capabilities,
     }
 
-    local require_ok, server = pcall(require, "plugins.lsp.settings." .. server_name)
+    local require_ok, server = pcall(require, "user.lsp.settings." .. server_name)
     if require_ok then
       opts = vim.tbl_deep_extend("force", opts, server)
     end
