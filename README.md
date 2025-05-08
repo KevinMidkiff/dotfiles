@@ -19,12 +19,9 @@ In the command above, the `-p ubuntu` specifies to install the packages for the
 Ubuntu platform and the `-c all` tells the installer to install the
 configuration for all supported applications.
 
-The applications supported are listed below:
-
-- nvim
-- zsh
-- vim
-- tmux
+See the [`configs`](./configs/) directory for supported applications. Note
+that not all the folders in there have something to install. They will only
+install the configuration if the directory contains an `install.sh` script.
 
 To install the configuration any individual application execute the `install.sh`
 script as follows: `./install.sh -c <package>`. For example:
