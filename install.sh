@@ -37,7 +37,7 @@ configs=()
 install_pkgs=0
 pkgs=""
 
-while getopts ":c:h:p:f:" arg ; do
+while getopts ":c:hp:f:" arg ; do
     case ${arg} in
         # Install configs for OPTARG application
         c)
@@ -75,14 +75,13 @@ while getopts ":c:h:p:f:" arg ; do
             install_pkgs=1
             ;;
 
+        h)
+            usage $0
+            exit 0
+            ;;
         # Default
         *)
-            if [ "${OPTARG}" == "h" ] ; then
-                usage $0
-                exit 0
-            else
-                log_fatal "Unknown argument - arg: ${arg} OPTARG: ${OPTARG}"
-            fi
+            log_fatal "Unknown argument - arg: ${arg} OPTARG: ${OPTARG}"
             ;;
     esac
 done
