@@ -42,8 +42,8 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use "nvim-lua/popup.nvim"    -- An implementation of the Popup API from vim in Neovim
+  use "nvim-lua/plenary.nvim"  -- Useful lua functions used ny lots of plugins
   use "projekt0n/github-nvim-theme"
   use "windwp/nvim-autopairs"
   use "numToStr/Comment.nvim"
@@ -54,25 +54,25 @@ return packer.startup(function(use)
   use "moll/vim-bbye"
 
   -- cmp plugins
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "hrsh7th/nvim-cmp"         -- The completion plugin
+  use "hrsh7th/cmp-buffer"       -- buffer completions
+  use "hrsh7th/cmp-path"         -- path completions
+  use "hrsh7th/cmp-cmdline"      -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
 
   -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
+  use "L3MON4D3/LuaSnip"             --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
-  use ({
+  use({
     'nvimdev/lspsaga.nvim',
     after = 'nvim-lspconfig',
     -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
     commit = 'd027f8b',
     config = function()
-        require('lspsaga').setup({})
+      require('lspsaga').setup({})
     end,
   })
 
@@ -82,15 +82,13 @@ return packer.startup(function(use)
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-
-  use ({
+  use({
     "linux-cultist/venv-selector.nvim",
     branch = 'regexp'
   })
-  -- use "williamboman/nvim-lsp-installer" -- simple to use language server installer
-  -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use "lukas-reineke/lsp-format.nvim"
 
-    -- Telescope
+  -- Telescope
   use "nvim-telescope/telescope.nvim"
   use 'nvim-telescope/telescope-media-files.nvim'
 
@@ -112,7 +110,7 @@ return packer.startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
 
-  use {'iamcco/markdown-preview.nvim'}
+  use { 'iamcco/markdown-preview.nvim' }
 
   -- vim-go
   -- use 'fatih/vim-go'
