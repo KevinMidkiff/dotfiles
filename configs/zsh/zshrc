@@ -352,3 +352,7 @@ fi
 if [ -f "${HOME}/.local/bin/env" ] ; then
     source "$HOME/.local/bin/env"
 fi
+
+# Random additions to the PATH, may want to have system specific files for this
+# which get included in the future
+export PATH=${HOME}/.local/bin:${PATH}
