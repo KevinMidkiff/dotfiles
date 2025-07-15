@@ -49,3 +49,7 @@ keymap("n", "<leader>fb", "<cmd>lua require'telescope.builtin'.buffers(require('
 
 keymap("n", "<leader>vs", '<cmd>VenvSelect<cr>', opts)
 
+-- LSP --
+keymap("n", "<leader>ls", "<cmd>LspStop<cr>", opts)
+keymap("n", "<leader>ll", "<cmd>LspStart<cr>", opts)
+
