@@ -77,7 +77,8 @@ fi
 if [ $use_default_style -eq 1 ] ; then
     # Default style
     primary="146"
-    accent="9"
+    # accent="9"
+    accent="198"
     accent2="120"
     accent3="122"
 fi
@@ -93,16 +94,19 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -f "${HOME}/.zshrc.show-host" 
     ssh_msg="%F{$accent3}[$(hostname)]%f "
 fi
 
+
 # Check for user data function to attach to the prompt
 has_user_data=0
 if [ -f "${HOME}/.zshrc.user-data" ] ; then
     source "${HOME}/.zshrc.user-data"
     has_user_data=1
-    if typeset -f prompt_user_data > /dev/null ; then
-    else
-        echo "ERROR: ~/.zshrc.user-data missing 'prompt_user_data' function"
-        has_user_data=0
-    fi
+else
+    function prompt_user_data() { }
+fi
+
+if typeset -f prompt_user_data > /dev/null ; then
+else
+    echo "ERROR: ~/.zshrc.user-data missing 'prompt_user_data' function"
 fi
 
 zstyle ':completion:*' menu select completer _complete _correct _approximate
@@ -174,25 +178,23 @@ _setup_ps1() {
     # VENV=""
     # CNDENV=""
     ENV=""
+    USRDATA="%F{$accent2}`prompt_user_data`%f"
+
     [ "x$KEYMAP" = "xvicmd" ] && GLYPH="${NORMAL_GLYPH}"
     [[ $EUID -eq 0 ]] && ROOT="%F{$accent}[root]%f "
-    if [ ! -z "${CONDA_DEFAULT_ENV}" ] && [ "${CONDA_DEFAULT_ENV}" != "base" ] ; then
-        ENV="%F{$accent2}[conda:%f %F{$accent}${CONDA_DEFAULT_ENV}%f%F{$accent2}]%f "
-    fi
+
+    # if [ ! -z "${CONDA_DEFAULT_ENV}" ] && [ "${CONDA_DEFAULT_ENV}" != "base" ] ; then
+    #     ENV="%F{$accent2}[conda:%f %F{$accent}${CONDA_DEFAULT_ENV}%f%F{$accent2}]%f "
+    # fi
     if [ ! -z "${PYENV_VERSION}" ] ; then
         ENV="%F{$accent2}[pyenv:%f %F{$accent}${PYENV_VERSION}%f%F{$accent2}]%f "
     fi
 
     # See virtualenv comment above
     # [ -n "$VIRTUAL_ENV" ] && VENV="%F{$accent2}[`basename $VIRTUAL_ENV`]%f "
-    if [ $has_user_data -eq 1 ] ; then
-        USRDATA="%F{$accent2}[`prompt_user_data`]%f "
-    else
-        USRDATA=""
-    fi
     # See virtualenv comment above
     # PS1=" $USRDATA$VENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
-    PS1=" $USRDATA$ENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%(4~|%B...%b/%3~|%~)%f$vcs_info_msg_0_ "
+    PS1=" $USRDATA$ENV$ROOT%(?.%F{$accent}.%F{$primary})$GLYPH%f $ssh_msg%F{$primary}%B%(4~|.../%3~|%~)%f$vcs_info_msg_0_%b "
 }
 _setup_ps1
 
@@ -332,16 +334,18 @@ if [ ${#idents[@]} -gt 0 ] ; then
     source $ZSH_DIR/scripts/ssh-agent.plugin.zsh
 fi
 
-highlight="$ZSH_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
-if [ -f "$highlight" ] ; then
-    source $highlight
-fi
-
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 autosuggest="$ZSH_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
 if [ -f "$autosuggest" ] ; then
     source $autosuggest
 fi
 
+
+highlight="$ZSH_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+if [ -f "$highlight" ] ; then
+    source $highlight
+fi
 
 uname_out="$(uname -s)"
 if [[ "${uname_out}" =~ "Darwin"* ]] ; then
