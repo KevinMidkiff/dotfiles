@@ -2,6 +2,7 @@ local M = {}
 local keymap = vim.keymap.set
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local lsp_fmt = require "lsp-format"
+-- local disabled_fmts = { "rust_analyzer" }
 
 M.capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -45,7 +46,7 @@ end
 M.on_attach = function(client, bufnr)
   M.lsp_keymaps(bufnr)
   M.lsp_highlight(client, bufnr)
-  lsp_fmt.on_attach(client, bufnr)
+  -- lsp_fmt.on_attach(client, bufnr)
 end
 
 M.on_init = function(client, _)

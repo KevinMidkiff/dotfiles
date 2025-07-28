@@ -43,9 +43,13 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- Telescope --
 -- keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>ff",
+  "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+  opts)
 keymap("n", "<leader>tt", "<cmd>Telescope live_grep<cr>", opts)
-keymap("n", "<leader>fb", "<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>fb",
+  "<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+  opts)
 
 keymap("n", "<leader>vs", '<cmd>VenvSelect<cr>', opts)
 
@@ -53,3 +57,6 @@ keymap("n", "<leader>vs", '<cmd>VenvSelect<cr>', opts)
 keymap("n", "<leader>ls", "<cmd>LspStop<cr>", opts)
 keymap("n", "<leader>ll", "<cmd>LspStart<cr>", opts)
 
+-- DiffOpen
+keymap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", opts)
+keymap("n", "<leader>dc", "<cmd>DiffviewClose<cr>", opts)
