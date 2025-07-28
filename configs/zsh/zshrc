@@ -88,6 +88,36 @@ if [ $use_default_style -eq 1 ] ; then
     accent3="122"
 fi
 
+# tmux theming configuration
+use_default_tmux_style=1
+if [ -f "${HOME}/.tmux.style" ] ; then
+    source "${HOME}/.tmux.style"
+    if [ -x "${TMUX_PRIMARY}" ] ; then
+        log_error "${HOME}/.tmux.style: missing TMUX_PRIMARY"
+        use_default_tmux_style=1
+    fi
+    if [ -x "${TMUX_ACCENT}" ] ; then
+        log_error "${HOME}/.tmux.style: missing TMUX_ACCENT"
+        use_default_tmux_style=1
+    fi
+    if [ -x "${TMUX_ACCENT2}" ] ; then
+        log_error "${HOME}/.tmux.style: missing TMUX_ACCENT2"
+        use_default_tmux_style=1
+    fi
+    if [ -x "${TMUX_FONT_COLOUR}" ] ; then
+        log_error "${HOME}/.tmux.style: missing TMUX_FONT_COLOUR"
+        use_default_tmux_style=1
+    fi
+    use_default_tmux_style=0
+fi
+
+if [ ${use_default_tmux_style} -eq 1 ] ; then
+    export TMUX_PRIMARY=colour16
+    export TMUX_ACCENT=colour199
+    export TMUX_ACCENT2=colour236
+    export TMUX_FONT_COLOUR=white
+fi
+
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] ; then
     # Flip-flow primary and accent for ssh'ing into a system
@@ -97,6 +127,11 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] ; then
     tmp="${accent2}"
     accent2="${accent3}"
     accent3="${tmp}"
+
+    # flip tmux colors as well
+    tmp="${TMUX_PRIMARY}"
+    export TMUX_PRIMARY=${TMUX_ACCENT}
+    export TMUX_ACCENT=${tmp}
 fi
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -f "${HOME}/.zshrc.show-host" ]; then
