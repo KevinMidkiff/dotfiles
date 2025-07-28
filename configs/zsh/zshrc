@@ -5,6 +5,11 @@ ZSH_FILE=$(readlink $HOME/.zshrc)
 ZSH_DIR=$(dirname ${ZSH_FILE})
 DOTFILES="${ZSH_DIR}/../../"
 
+uname_out="$(uname -s)"
+if [[ "${uname_out}" =~ "Darwin"* ]] ; then
+    export PATH=${PATH}:/opt/homebrew/bin/
+fi
+
 if [ ! -d "${DOTFILES}" ] ; then
     echo "!!! ERROR: Failed to find .dotfiles directory at '${DOTFILES}'"
 else
@@ -345,11 +350,6 @@ fi
 highlight="$ZSH_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 if [ -f "$highlight" ] ; then
     source $highlight
-fi
-
-uname_out="$(uname -s)"
-if [[ "${uname_out}" =~ "Darwin"* ]] ; then
-    export PATH=${PATH}:/opt/homebrew/bin/
 fi
 
 # UV setup if it's installed
