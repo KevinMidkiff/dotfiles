@@ -91,8 +91,12 @@ fi
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] ; then
     # Flip-flow primary and accent for ssh'ing into a system
+    tmp="${primary}"
     primary="${accent}"
-    accent="${primary}"
+    accent="${tmp}"
+    tmp="${accent2}"
+    accent2="${accent3}"
+    accent3="${tmp}"
 fi
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -f "${HOME}/.zshrc.show-host" ]; then
