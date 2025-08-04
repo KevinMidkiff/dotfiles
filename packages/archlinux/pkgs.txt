@@ -1,0 +1,16 @@
+neovim
+vim
+git
+zsh
+tmux
+wget
+curl
+tree
+btop
+fd
+bat
+ripgrep
+inetutils
+unzip
+rustup
+less
