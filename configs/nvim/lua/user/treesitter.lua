@@ -7,7 +7,11 @@ require('ts_context_commentstring').setup {}
 vim.g.skip_ts_context_commentstring_module = true
 
 configs.setup {
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  prefer_git = true,
+  ensure_installed = {
+    "python", "bash", "rust", "c", "dockerfile",
+    "vimdoc", "vim", "lua", "luadoc", "diff",
+  },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { "phpdoc" }, -- List of parsers to ignore installing
   autopairs = {
