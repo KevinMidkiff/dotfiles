@@ -111,7 +111,7 @@ if [ -f "${HOME}/.tmux.style" ] ; then
     use_default_tmux_style=0
 fi
 
-if [ ${use_default_tmux_style} -eq 1 ] ; then
+if [ $use_default_tmux_style -eq 1 ] ; then
     export TMUX_PRIMARY=colour16
     export TMUX_ACCENT=colour199
     export TMUX_ACCENT2=colour236
@@ -120,18 +120,22 @@ fi
 
 ssh_msg=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] ; then
-    # Flip-flow primary and accent for ssh'ing into a system
-    tmp="${primary}"
-    primary="${accent}"
-    accent="${tmp}"
-    tmp="${accent2}"
-    accent2="${accent3}"
-    accent3="${tmp}"
+    if [ "${ZSH_STYLE_SSH_SWAP}" != "disabled" ] ; then
+        # Flip-flow primary and accent for ssh'ing into a system
+        tmp="${primary}"
+        primary="${accent}"
+        accent="${tmp}"
+        tmp="${accent2}"
+        accent2="${accent3}"
+        accent3="${tmp}"
+    fi
 
-    # flip tmux colors as well
-    tmp="${TMUX_PRIMARY}"
-    export TMUX_PRIMARY=${TMUX_ACCENT}
-    export TMUX_ACCENT=${tmp}
+    if [ "${TMUX_STYLE_SSH_SWAP}" != "disabled" ] ; then
+        # flip tmux colors as well
+        tmp="${TMUX_PRIMARY}"
+        export TMUX_PRIMARY=${TMUX_ACCENT}
+        export TMUX_ACCENT=${tmp}
+    fi
 fi
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -f "${HOME}/.zshrc.show-host" ]; then
