@@ -1,0 +1,4 @@
+#!/bin/bash
+function prompt_user_data() {
+    echo -n "[$(ip route get 1.2.3.4 | awk '{printf $7}')] "
+}
