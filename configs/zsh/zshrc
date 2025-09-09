@@ -82,7 +82,6 @@ fi
 if [ $use_default_style -eq 1 ] ; then
     # Default style
     primary="146"
-    # accent="9"
     accent="198"
     accent2="120"
     accent3="122"
@@ -403,3 +402,5 @@ fi
 # Random additions to the PATH, may want to have system specific files for this
 # which get included in the future
 export PATH=${HOME}/.local/bin:${PATH}
+
+source ${DOTFILES}/scripts/warpssh.sh
