@@ -1,5 +1,6 @@
 local M = {}
 local keymap = vim.keymap.set
+-- local keymap = vim.api.nvim_set_keymap
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local lsp_fmt = require "lsp-format"
 -- local disabled_fmts = { "rust_analyzer" }
