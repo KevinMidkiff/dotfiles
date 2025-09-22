@@ -67,14 +67,21 @@ return packer.startup(function(use)
   use "L3MON4D3/LuaSnip"             --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
-  use({
-    'nvimdev/lspsaga.nvim',
-    after = 'nvim-lspconfig',
-    -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
-    commit = 'd027f8b',
-    config = function()
-      require('lspsaga').setup({})
-    end,
+  -- use({
+  --   'nvimdev/lspsaga.nvim',
+  --   after = 'nvim-lspconfig',
+  --   -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
+  --   -- commit = 'd027f8b',
+  --   config = function()
+  --     require('lspsaga').setup({})
+  --   end,
+  -- })
+  use ({
+      'nvimdev/lspsaga.nvim',
+      after = 'nvim-lspconfig',
+      config = function()
+          require('lspsaga').setup({})
+      end,
   })
 
   -- LSP
@@ -85,7 +92,7 @@ return packer.startup(function(use)
   }
   use({
     "linux-cultist/venv-selector.nvim",
-    branch = 'regexp'
+    -- branch = 'regexp'
   })
   use "lukas-reineke/lsp-format.nvim"
 

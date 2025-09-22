@@ -2,36 +2,29 @@ require("mason").setup()
 require("lsp-format").setup {}
 require("venv-selector").setup {}
 
-local lspconfig = require "mason-lspconfig"
 local on_attach = require("user.lsp.opts").on_attach
 local on_init = require("user.lsp.opts").on_init
 local capabilities = require("user.lsp.opts").capabilities
-local disabled_servers = {}
+local disabled_servers = {} -- Add any servers you want to skip
 
-lspconfig.setup {
-  ensure_installed = { "lua_ls", "rust_analyzer", "ruff", "clangd", },
-  handlers = {
-    -- Automatically configure the LSP installed
-    function(server_name)
-      for _, name in pairs(disabled_servers) do
-        if name == server_name then
-          return
-        end
-      end
+local servers = { "lua_ls", "rust_analyzer", "ruff", "clangd" }
 
-      local opts = {
-        on_attach = on_attach,
-        on_init = on_init,
-        capabilities = capabilities,
-      }
+for _, server in ipairs(servers) do
+  if not vim.tbl_contains(disabled_servers, server) then
+    local opts = {
+      on_attach = on_attach,
+      on_init = on_init,
+      capabilities = capabilities,
+    }
 
-      local require_ok, server = pcall(require, "user.lsp.settings." .. server_name)
-      if require_ok then
-        opts = vim.tbl_deep_extend("force", opts, server)
-      end
+    -- Load user-specific settings if available
+    local ok, user_opts = pcall(require, "user.lsp.settings." .. server)
+    if ok then
+      opts = vim.tbl_deep_extend("force", opts, user_opts)
+    end
 
-      require("lspconfig")[server_name].setup(opts)
-    end,
-  }
-}
+    vim.lsp.config(server, opts)
+    vim.lsp.enable(server)
+  end
+end
 
