@@ -268,14 +268,16 @@ alias dotfiles='cd ${HOME}/.dotfiles/'
 alias ll="ls -lH"
 alias l="ls -la"
 
-if [ ! -z "$(which batcat)" ] ; then
-    if is_macos ; then
-        alias cat="bat"
-        alias jat="bat -l json"
-    else
-        alias cat="batcat"
-        alias jat="batcat -l json"
-    fi
+which batcat > /dev/null
+if [ "$?" -eq 0 ] ; then
+    alias cat="batcat"
+    alias jat="batcat -l json"
+fi
+
+which bat > /dev/null
+if [ "$?" -eq 0 ] ; then
+    alias cat="bat"
+    alias jat="bat -l json"
 fi
 
 arch="$(uname 2> /dev/null)"
