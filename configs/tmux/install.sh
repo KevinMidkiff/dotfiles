@@ -15,5 +15,18 @@ if [ -f ~/.tmux.conf ] ; then
     fi
 fi
 
+plugins="${HOME}/.tmux/plugins"
+
+# Install Tmux Plugin Manager (tpm)
+if [ ! -d "${plugins}" ] ; then
+    log_info "Creating directory '${plugins}'"
+    mkdir -p ${plugins}
+    check_error "Failed to create directory '${plugins}'"
+
+    log_info "Cloning TPM"
+    git clone https://github.com/tmux-plugins/tpm ${plugins}/tpm
+    check_error "Failed to clone TPM into '${plugins}/tpm'"
+fi
+
 ln -sf ${PWD}/tmux.conf ~/.tmux.conf
 check_error "Failed to create soft link to $cwd/tmux.conf in ${HOME} directory"
