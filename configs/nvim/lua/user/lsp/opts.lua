@@ -46,7 +46,10 @@ end
 M.on_attach = function(client, bufnr)
   M.lsp_keymaps(bufnr)
   M.lsp_highlight(client, bufnr)
-  -- lsp_fmt.on_attach(client, bufnr)
+  local enable_lsp_fmt = os.getenv("NVIM_ENABLE_LSP_FMT")
+  if enable_lsp_fmt == "yes" then
+    lsp_fmt.on_attach(client, bufnr)
+  end
 end
 
 M.on_init = function(client, _)
