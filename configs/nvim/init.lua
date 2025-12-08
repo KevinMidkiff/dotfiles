@@ -1,1 +1,5 @@
--- init.lua --
+require "options"
+require "keymaps"
+require "plugins"
+require "theme.colorscheme"
+require "theme.lualine"
