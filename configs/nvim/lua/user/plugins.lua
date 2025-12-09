@@ -60,7 +60,6 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-path"         -- path completions
   use "hrsh7th/cmp-cmdline"      -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
 
   -- Telescope
@@ -72,7 +71,6 @@ return packer.startup(function(use)
   -- TODO: Configuration...
   use {
     "nvim-treesitter/nvim-treesitter",
-    branch = "main",
     run = ":TSUpdate",
   }
 
@@ -82,6 +80,7 @@ return packer.startup(function(use)
 
   -- BIG TODO!
   -- LSP
+  -- use "hrsh7th/cmp-nvim-lsp"
   -- use({
   --   'nvimdev/lspsaga.nvim',
   --   after = 'nvim-lspconfig',
