@@ -106,10 +106,7 @@ return packer.startup(function(use)
 
   -- Misc
   use "iamcco/markdown-preview.nvim"
-  -- use({
-  --   "linux-cultist/venv-selector.nvim",
-  --   branch = 'regexp'
-  -- })
+  use "linux-cultist/venv-selector.nvim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
