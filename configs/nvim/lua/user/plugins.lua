@@ -1,9 +1,7 @@
-local fn = vim.fn
-
 -- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
+local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  PACKER_BOOTSTRAP = vim.fn.system {
     "git",
     "clone",
     "--depth",
@@ -38,56 +36,31 @@ packer.init {
   },
 }
 
--- Install your plugins here
 return packer.startup(function(use)
-  -- My plugins here
-  use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim"    -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim"  -- Useful lua functions used ny lots of plugins
-  use "projekt0n/github-nvim-theme"
-  use "windwp/nvim-autopairs"
-  use "numToStr/Comment.nvim"
-  use "junegunn/goyo.vim"
-  use 'kyazdani42/nvim-web-devicons'
-  use 'kyazdani42/nvim-tree.lua'
-  use "akinsho/bufferline.nvim"
-  use "moll/vim-bbye"
+  -- Base required plugins
+  use "wbthomason/packer.nvim"
+  use "nvim-lua/popup.nvim"
+  use "nvim-lua/plenary.nvim"
+
+  -- Themes
   use { "catppuccin/nvim", as = "catppuccin" }
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
-  -- cmp plugins
-  use "hrsh7th/nvim-cmp"         -- The completion plugin
-  use "hrsh7th/cmp-buffer"       -- buffer completions
-  use "hrsh7th/cmp-path"         -- path completions
-  use "hrsh7th/cmp-cmdline"      -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-nvim-lua"
-
-  -- snippets
+  -- snippets (used by cmp for completing snippets)
+  -- NOTE: Snippet engine is required for nvim-cmp
   use "L3MON4D3/LuaSnip"             --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
-  use({
-    'nvimdev/lspsaga.nvim',
-    after = 'nvim-lspconfig',
-    -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
-    commit = 'd027f8b',
-    config = function()
-      require('lspsaga').setup({})
-    end,
-  })
-
-  -- LSP
-  use {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
-  }
-  use({
-    "linux-cultist/venv-selector.nvim",
-    branch = 'regexp'
-  })
-  use "lukas-reineke/lsp-format.nvim"
+  -- Completion plugins
+  use "hrsh7th/nvim-cmp"         -- base completion plugin
+  use "hrsh7th/cmp-path"         -- path completions
+  use "hrsh7th/cmp-cmdline"      -- cmdline completions
+  use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/cmp-buffer"       -- buffer completions
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
@@ -104,16 +77,47 @@ return packer.startup(function(use)
   use "lewis6991/gitsigns.nvim"
   use "sindrets/diffview.nvim"
 
-  -- lualine
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
+  -- LSP
+  use "hrsh7th/cmp-nvim-lsp"
+  use "williamboman/mason.nvim"
+  use "williamboman/mason-lspconfig.nvim"
+  use "neovim/nvim-lspconfig"
+  use "lukas-reineke/lsp-format.nvim"
+  use({
+    'nvimdev/lspsaga.nvim',
+    after = 'nvim-lspconfig',
+    -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
+    commit = 'd027f8b',
+    config = function()
+      require('lspsaga').setup({
+        symbol_in_winbar = {
+          enable = false,
+        },
+        lightbulb = {
+          enable = false,
+        },
+        diagnostic = {
+          diagnostic_only_current = true,
+          extend_relatedInformation = false,
+        },
+      })
+    end,
+  })
 
-  use { 'iamcco/markdown-preview.nvim' }
 
-  -- vim-go
-  -- use 'fatih/vim-go'
+  -- Garbage bin of things I maybe need--
+  -- use "numToStr/Comment.nvim"
+  -- use "windwp/nvim-autopairs"
+  -----
+
+  -- Less certain that I want --
+  -- use 'kyazdani42/nvim-tree.lua'
+  -- use "akinsho/bufferline.nvim" -- adds top "tab" line in nvim
+  -----
+
+  -- Misc
+  use "iamcco/markdown-preview.nvim"
+  use "linux-cultist/venv-selector.nvim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

@@ -9,7 +9,7 @@ vim.g.skip_ts_context_commentstring_module = true
 configs.setup {
   prefer_git = true,
   ensure_installed = {
-    "python", "bash", "rust", "c", "dockerfile",
+    "python", "bash", "rust", "c",
     "vimdoc", "vim", "lua", "luadoc", "diff",
   },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)

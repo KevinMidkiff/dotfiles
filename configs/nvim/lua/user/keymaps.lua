@@ -42,7 +42,6 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 -- Terminal --
 
 -- Telescope --
--- keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>ff",
   "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
   opts)
@@ -58,5 +57,6 @@ keymap("n", "<leader>ls", "<cmd>LspStop<cr>", opts)
 keymap("n", "<leader>ll", "<cmd>LspStart<cr>", opts)
 
 -- DiffOpen
-keymap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", opts)
-keymap("n", "<leader>dc", "<cmd>DiffviewClose<cr>", opts)
+-- would need to include this plugin: sindrets/diffview.nvim
+-- keymap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", opts)
+-- keymap("n", "<leader>dc", "<cmd>DiffviewClose<cr>", opts)
