@@ -55,27 +55,25 @@ return packer.startup(function(use)
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- Completion plugins
-  -- TODO: Configuration...
   use "hrsh7th/nvim-cmp"         -- base completion plugin
   use "hrsh7th/cmp-path"         -- path completions
   use "hrsh7th/cmp-cmdline"      -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/cmp-buffer"       -- buffer completions
 
   -- Telescope
-  -- TODO: Configuration...
   use "nvim-telescope/telescope.nvim"
   use 'nvim-telescope/telescope-media-files.nvim'
 
   -- Treesitter
-  -- TODO: Configuration...
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   }
+  use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Git
-  -- TODO: Configuration...
   use "lewis6991/gitsigns.nvim"
 
   -- BIG TODO!
@@ -98,7 +96,6 @@ return packer.startup(function(use)
   -----
 
   -- Less certain that I want --
-  -- use "hrsh7th/cmp-buffer"       -- buffer completions
   -- use 'kyazdani42/nvim-tree.lua'
   -- use "akinsho/bufferline.nvim" -- adds top "tab" line in nvim
   -----
