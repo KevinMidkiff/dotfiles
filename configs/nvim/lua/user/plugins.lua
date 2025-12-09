@@ -36,6 +36,9 @@ packer.init {
   },
 }
 
+-- include LSP saga options
+local lspsaga_config = require("user.lsp.saga")
+
 return packer.startup(function(use)
   -- Base required plugins
   use "wbthomason/packer.nvim"
@@ -89,7 +92,7 @@ return packer.startup(function(use)
     -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
     commit = 'd027f8b',
     config = function()
-      require('lspsaga').setup({})
+      require('lspsaga').setup(lspsaga_config)
     end,
   })
 
