@@ -14,7 +14,7 @@ local disabled_fmt = { "rust_analyzer" }
 
 for _, server in ipairs(servers) do
   local attach_fn = on_attach_fmt
-  if not vim.tbl_contains(disabled_fmt, server) then
+  if vim.tbl_contains(disabled_fmt, server) then
     attach_fn = on_attach
   end
 
