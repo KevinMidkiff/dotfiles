@@ -75,19 +75,23 @@ return packer.startup(function(use)
 
   -- Git
   use "lewis6991/gitsigns.nvim"
+  use "sindrets/diffview.nvim"
 
-  -- BIG TODO!
   -- LSP
-  -- use "hrsh7th/cmp-nvim-lsp"
-  -- use({
-  --   'nvimdev/lspsaga.nvim',
-  --   after = 'nvim-lspconfig',
-  --   -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
-  --   commit = 'd027f8b',
-  --   config = function()
-  --     require('lspsaga').setup({})
-  --   end,
-  -- })
+  use "hrsh7th/cmp-nvim-lsp"
+  use "williamboman/mason.nvim"
+  use "williamboman/mason-lspconfig.nvim"
+  use "neovim/nvim-lspconfig"
+  use "lukas-reineke/lsp-format.nvim"
+  use({
+    'nvimdev/lspsaga.nvim',
+    after = 'nvim-lspconfig',
+    -- Locking version for now due to bug: https://github.com/nvimdev/lspsaga.nvim/issues/1522
+    commit = 'd027f8b',
+    config = function()
+      require('lspsaga').setup({})
+    end,
+  })
 
 
   -- Garbage bin of things I maybe need--
@@ -99,6 +103,13 @@ return packer.startup(function(use)
   -- use 'kyazdani42/nvim-tree.lua'
   -- use "akinsho/bufferline.nvim" -- adds top "tab" line in nvim
   -----
+
+  -- Misc
+  use "iamcco/markdown-preview.nvim"
+  -- use({
+  --   "linux-cultist/venv-selector.nvim",
+  --   branch = 'regexp'
+  -- })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
