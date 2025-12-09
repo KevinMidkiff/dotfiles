@@ -2,7 +2,6 @@ local M = {}
 local keymap = vim.keymap.set
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local lsp_fmt = require "lsp-format"
--- local disabled_fmts = { "rust_analyzer" }
 
 M.capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -10,10 +9,8 @@ M.lsp_keymaps = function(bufnr)
   keymap("n", "gD", "<cmd>Lspsaga finder<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gd", "<cmd>Lspsaga goto_definition<cr>", { buffer = bufnr, silent = true })
   keymap("n", "<leader>la", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP | Code Action", silent = true })
-  -- keymap("n", "gd", vim.lsp.buf.definition, {buffer = bufnr, silent = true})
   keymap("n", "gl", "<cmd>Lspsaga show_line_diagnostics<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { buffer = bufnr, silent = true })
-  -- keymap("n", "K", vim.lsp.buf.hover, {buffer = bufnr, silent = true})
   keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gI", "<cmd>Telescope lsp_implementations<cr>", { buffer = bufnr, silent = true })
   keymap("v", "<leader>la", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP | Code Action", silent = true })
@@ -42,10 +39,16 @@ M.lsp_highlight = function(client, bufnr)
   end
 end
 
-M.on_attach = function(client, bufnr)
+function base_on_attach(client, bufnr)
   M.lsp_keymaps(bufnr)
   M.lsp_highlight(client, bufnr)
-  -- lsp_fmt.on_attach(client, bufnr)
+end
+
+M.on_attach = base_on_attach
+
+M.on_attach_fmt = function(client, bufnr)
+  base_on_attach(client, bufnr)
+  lsp_fmt.on_attach(client, bufnr)
 end
 
 M.on_init = function(client, _)
