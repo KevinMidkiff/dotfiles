@@ -8,12 +8,14 @@ M.capabilities = cmp_nvim_lsp.default_capabilities()
 M.lsp_keymaps = function(bufnr)
   keymap("n", "gD", "<cmd>Lspsaga finder<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gd", "<cmd>Lspsaga goto_definition<cr>", { buffer = bufnr, silent = true })
-  keymap("n", "<leader>la", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP | Code Action", silent = true })
+  keymap("n", "go", "<cmd>Lspsaga outgoing_calls<cr>", { buffer = bufnr, silent = true })
+  keymap("n", "ga", "<cmd>Lspsaga code_action<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gl", "<cmd>Lspsaga show_line_diagnostics<cr>", { buffer = bufnr, silent = true })
+  keymap("n", "gL", "<cmd>Lspsaga show_buf_diagnostics<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { buffer = bufnr, silent = true })
   keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { buffer = bufnr, silent = true })
   keymap("n", "gI", "<cmd>Telescope lsp_implementations<cr>", { buffer = bufnr, silent = true })
-  keymap("v", "<leader>la", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP | Code Action", silent = true })
+  keymap("n", "gR", "<cmd>Lspsaga rename<cr>", { buffer = bufnr, silent = true })
 end
 
 -- Highlight symbol under cursor
