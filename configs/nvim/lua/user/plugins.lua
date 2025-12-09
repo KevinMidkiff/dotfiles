@@ -92,7 +92,14 @@ return packer.startup(function(use)
       require('lspsaga').setup({
         symbol_in_winbar = {
           enable = false,
-        }
+        },
+        lightbulb = {
+          enable = false,
+        },
+        diagnostic = {
+          diagnostic_only_current = true,
+          extend_relatedInformation = false,
+        },
       })
     end,
   })
