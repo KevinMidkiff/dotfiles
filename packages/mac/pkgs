@@ -8,3 +8,4 @@ wget
 jq
 bat
 fd
+rg
