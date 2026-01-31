@@ -66,6 +66,12 @@ return packer.startup(function(use)
   use "nvim-telescope/telescope.nvim"
   use 'nvim-telescope/telescope-media-files.nvim'
 
+  -- Telescope fzf optimization
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install'
+  }
+
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",

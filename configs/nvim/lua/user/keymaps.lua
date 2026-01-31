@@ -57,6 +57,8 @@ keymap("n", "<leader>ls", "<cmd>LspStop<cr>", opts)
 keymap("n", "<leader>ll", "<cmd>LspStart<cr>", opts)
 
 -- DiffOpen
--- would need to include this plugin: sindrets/diffview.nvim
--- keymap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", opts)
--- keymap("n", "<leader>dc", "<cmd>DiffviewClose<cr>", opts)
+keymap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", opts)
+keymap("n", "<leader>dc", "<cmd>DiffviewClose<cr>", opts)
+
+-- MarkdownPreview
+keymap("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<cr>", opts)

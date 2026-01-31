@@ -9,3 +9,5 @@ jq
 bat
 fd
 rg
+cmake
+fzf

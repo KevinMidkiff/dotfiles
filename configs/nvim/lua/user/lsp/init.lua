@@ -7,7 +7,15 @@ local on_init = require("user.lsp.opts").on_init
 local capabilities = require("user.lsp.opts").capabilities
 
 -- Servers to specifically enable
-local servers = { "lua_ls", "rust_analyzer", "ruff", "clangd" }
+local servers = {
+  "lua_ls",
+  "rust_analyzer",
+  "pyright",
+  "ruff",
+  "clangd",
+  "ts_ls",
+  "prettier"
+}
 
 -- DO NOT format the languages in this list
 local disabled_fmt = { "rust_analyzer" }
