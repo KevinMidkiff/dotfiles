@@ -62,3 +62,6 @@ keymap("n", "<leader>dc", "<cmd>DiffviewClose<cr>", opts)
 
 -- MarkdownPreview
 keymap("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<cr>", opts)
+
+-- GitSigns
+keymap("n", "<leader>gb", "<cmd>Gitsigns blame_line<cr>", opts)
