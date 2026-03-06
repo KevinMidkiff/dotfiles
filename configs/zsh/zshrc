@@ -259,14 +259,28 @@ bindkey -v
 bindkey "^R" history-incremental-pattern-search-backward
 
 # Global editor
-export EDITOR="vim"
+NVIM_BIN=$(which nvim)
+if [ $? -ne 0 ] ; then
+    VIM_BIN=$(which vim)
+    if [ $? -ne 0 ] ; then
+        export EDITOR=${VIM_BIN}
+    else
+        echo ">> WARN: falling back to vi for EDITOR"
+        export EDITOR="vi"
+    fi
+else
+    export EDITOR=${NVIM_BIN}
+fi
 
 # Aliases
 alias zshconfig="$EDITOR ~/.zshrc"
 alias zshsource="source ~/.zshrc"
-alias dotfiles='cd ${HOME}/.dotfiles/'
-alias ll="ls -lH"
-alias l="ls -la"
+alias dotfiles='pushd ${HOME}/.dotfiles/'
+alias ll="ls -lH --color"
+alias l="ls -la --color"
+alias cdcode="pushd ~/code/"
+alias jat="cat --language=json"
+alias yat="cat --language=yaml"
 
 which batcat > /dev/null
 if [ "$?" -eq 0 ] ; then
@@ -277,7 +291,6 @@ fi
 which bat > /dev/null
 if [ "$?" -eq 0 ] ; then
     alias cat="bat"
-    alias jat="bat -l json"
 fi
 
 arch="$(uname 2> /dev/null)"
@@ -403,6 +416,83 @@ fi
 
 # Random additions to the PATH, may want to have system specific files for this
 # which get included in the future
-export PATH=${HOME}/.local/bin:${PATH}
+export PATH=${HOME}/.local/bin:${DOTFILES}/scripts:${PATH}
 
 source ${DOTFILES}/scripts/warpssh.sh
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/kvn/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# git worktree helper function
+function gwt() {
+    if [[ -z "${WT_PREFIX}" ]] ; then
+        echo "ERROR: Missing WT_PREFIX for worktree branch"
+        return -1
+    fi
+
+    case "${1}" in
+        a)
+            local name
+            local branch_arg
+            local start_claude=false
+            if [[ "$#" -lt "2" ]] ; then
+                echo "missing args"
+                return -1
+            fi
+
+            # Parse args
+            shift # remove 'a'
+            while [[ "$#" -gt 0 ]] ; do
+                case "${1}" in
+                    -b)
+                        branch_arg="-b"
+                        shift
+                        ;;
+                    --claude)
+                        start_claude=true
+                        shift
+                        ;;
+                    -h|--help)
+                        echo "gwt a [-b] [--claude] <branch-name>"
+                        echo "  branch-name will be created as ${WT_PREFIX}/<branch-name>"
+                        echo "  --claude  start a Claude Code session with Linear context"
+                        return 0
+                        ;;
+                    *)
+                        name="${1}"
+                        shift
+                        ;;
+                esac
+            done
+
+            if [[ -z "${name}" ]] ; then
+                echo "missing branch name"
+                return -1
+            fi
+
+            branch="${WT_PREFIX}/${name}"
+            folder="../$(basename ${PWD})-${name}"
+            git worktree add ${folder} ${branch_arg} ${branch}
+            pushd ${folder}
+
+            if [[ "${start_claude}" == true ]] ; then
+                claude "The current git worktree branch is '${branch}'. Based on the branch name, find the Linear ticket associated with it if there is one. Look at the ticket to gain context about what needs to be done, then start the session ready to work on it."
+            fi
+            ;;
+        *)
+            git worktree ${@}
+            ;;
+    esac
+}
+
+# Helper to use fzf to cd to where a file or folder is which is found using fzf
+function fcd() {
+    res=$(fzf)
+    if [ -d "${res}" ] ; then
+        pushd ${res}
+    elif [ -f "${res}" ] ; then
+        pushd $(dirname ${res})
+    fi
+}
