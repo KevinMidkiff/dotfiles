@@ -11,8 +11,22 @@ GREEN="\033[0;32m"
 GREY="\033[2;49m"
 NC='\033[0m' # No Color
 
+function is_macos() {
+    uname_out="$(uname -s)"
+    if [[ "${uname_out}" =~ "Darwin"* ]] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
 function ts() {
-    date --iso-8601="seconds"
+    if is_macos ; then
+        date +\%Y-%m-%dT%H:%M:%S
+    else
+        date --iso-8601="seconds"
+    fi
 }
 
 function log() {
@@ -59,15 +73,6 @@ function verify_not_root() {
 function is_linux() {
     uname_out="$(uname -s)"
     if [[ "${uname_out}" =~ "Linux"* ]] ; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-function is_macos() {
-    uname_out="$(uname -s)"
-    if [[ "${uname_out}" =~ "Darwin"* ]] ; then
         return 0
     else
         return 1
