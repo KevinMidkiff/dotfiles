@@ -496,3 +496,8 @@ function fcd() {
         pushd $(dirname ${res})
     fi
 }
+
+MISE=$(which mise)
+if [ $? -eq 0 ] ; then
+    eval "$(mise activate zsh)"
+fi
