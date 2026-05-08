@@ -15,7 +15,7 @@ RESET='\033[0m'
 # Extract data from JSON stdin
 MODEL=$(echo "$input" | jq -r '.model.display_name // "Claude"')
 CWD=$(echo "$input" | jq -r '.workspace.current_dir // empty')
-EFFORT=$(echo "$input" | jq -r '.reasoning_effort // .effort_level // .effort // empty')
+EFFORT=$(echo "$input" | jq -r '.effort.level')
 
 # Model + effort in orange brackets
 if [ -n "$EFFORT" ]; then
