@@ -113,5 +113,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "effortLevel": "high",
-  "skipAutoPermissionPrompt": true
+  "disableAutoMode": "disable",
+  "skipAutoPermissionPrompt": false,
+  "editorMode": "vim"
 }
