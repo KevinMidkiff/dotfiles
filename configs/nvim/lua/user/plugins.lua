@@ -48,6 +48,7 @@ return packer.startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
+  use { "ellisonleao/gruvbox.nvim" }
 
   -- snippets (used by cmp for completing snippets)
   -- NOTE: Snippet engine is required for nvim-cmp

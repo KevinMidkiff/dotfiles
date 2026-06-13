@@ -7,7 +7,8 @@ end
 lualine.setup {
   options = {
     icons_enabled = true,
-    theme = 'catppuccin-mocha',
+    -- theme = 'catppuccin-mocha',
+    theme = 'gruvbox',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},

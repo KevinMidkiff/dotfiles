@@ -1,0 +1,6 @@
+#!/bin/bash
+export TMUX_STYLE_SSH_SWAP="disabled"
+export TMUX_PRIMARY="#32302f"
+export TMUX_ACCENT="#fe8019"
+export TMUX_ACCENT2="#ebdbb2"
+export TMUX_FONT_COLOUR="#ebdbb2"

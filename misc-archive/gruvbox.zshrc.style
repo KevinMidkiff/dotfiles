@@ -1,0 +1,6 @@
+#!/bin/bash
+export ZSH_STYLE_SSH_SWAP="disabled"
+export accent="#98971a"
+export primary="#d65d0e"
+export accent2="#d79921"
+export accent3="#458588"
